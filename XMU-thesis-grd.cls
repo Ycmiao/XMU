@@ -56,7 +56,6 @@
 \def\XMU@label@studentnumber{学~~~~~~~~号：}
 \def\XMU@label@thesis{学位论文}
 \def\XMU@label@advisor{指导教师姓名：}
-%\def\XMU@label@degree{申~~~~请~~~~学~~~~位}
 \def\XMU@label@submitdate{论文提交日期：}
 \def\XMU@label@defenddate{论文答辩日期：}
 \def\XMU@label@grantdate{学位授予日期：}
@@ -284,14 +283,14 @@ footskip=1.75cm% 页脚 1.8cm %
 \fancypagestyle{XMU@empty}{%
   \fancyhf{}}
 
+
 %======正文页眉页脚=================
 \fancypagestyle{XMU@headings}{%
   \fancyhf{}
   \fancyfoot[C]{\songti\zihao{5} \thepage}
-  \fancyhead[C]{\ifXMU@doctor\zihao{5}{\songti 厦门大学博士学位论文}
-                \else\zihao{5}{\songti 厦门大学硕士学位论文}\fi}
+  \fancyhead[CO]{\zihao{5} \songti \leftmark}
+  \fancyhead[CE]{\zihao{5} \songti {\XMU@value@title}}                
   }
-
 %==================================对于openright 选项，必须保证章页右开，且如果前章末页内容须清空其页眉页脚。===================
 \let\XMU@cleardoublepage\cleardoublepage
 \newcommand{\XMU@clearemptydoublepage}{%
@@ -629,19 +628,6 @@ footskip=1.75cm% 页脚 1.8cm %
 }
 
 
-% 页眉页脚
-\pagestyle{fancy}
-\fancyhf{}
-\fancyhead[C]{\songti \zihao{5} \XMU@label@headschoolname}  % 奇数页左页眉
-\fancyfoot[C]{\songti \zihao{5} {\thepage}}      % 页脚
-
-
-\fancypagestyle{plain}{% 设置开章页页眉页脚风格(只有页码作为页脚)
-  \fancyhf{}%
-  \fancyfoot[C]{\songti \zihao{5} \XMU@label@headschoolname}
-  \fancyfoot[C]{\songti \zihao{5} ~---~{\thepage}~---~} %%首页页脚格式
-}
-
 %% 用于英文目录, list it in eoc
 \newcommand\echapter[1]{\addcontentsline{eoc}{chapter}{\protect\numberline{\thechapter}#1}}
 \newcommand\esection[1]{\addcontentsline{eoc}{section}{\protect\numberline{\thesection}#1}}
@@ -652,8 +638,7 @@ footskip=1.75cm% 页脚 1.8cm %
  \newenvironment{abstract}
  {
   \cleardoublepage
-  \chapter{\XMU@label@abstract}
- }
+  \chapter{\XMU@label@abstract}}
  {}
 %下一页从偶数页开始
  \newcommand\beginatevenpage{
@@ -672,9 +657,8 @@ footskip=1.75cm% 页脚 1.8cm %
  {
   \clearpage
   \chapter*{\XMU@label@englishabstract}
-   \@mkboth{\MakeUppercase\XMU@label@englishabstract}{\MakeUppercase\XMU@label@englishabstract}%
-   \addcontentsline{eoc}{chapter}{\XMU@label@englishabstract}
- }
+  \@mkboth{\MakeUppercase\XMU@label@englishabstract}{\MakeUppercase\XMU@label@englishabstract}%   
+   \addcontentsline{eoc}{chapter}{\XMU@label@englishabstract}}
  {}
 
  % 英文摘要

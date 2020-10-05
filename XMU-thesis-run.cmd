@@ -1,5 +1,4 @@
 
-del template.pdf
 xelatex -no-pdf --interaction=nonstopmode template
 bibtex template
 xelatex -no-pdf --interaction=nonstopmode template

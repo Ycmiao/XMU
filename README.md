@@ -24,3 +24,14 @@ xelatex -interaction=nonstopmode %.tex
 使用中，如有问题，请入群
 
 QQ：1009155612
+
+更新添加伪代码：
+在XMU-thesis-grd.cls文件中添加：
+%% algorithm package
+\RequirePackage{algorithm,algorithmicx,algpseudocode}
+\floatname{algorithm}{算法}
+\renewcommand{\algorithmicrequire}{\textbf{输入:}}
+\renewcommand{\algorithmicensure}{\textbf{输出:}}
+ 
+\renewcommand\thealgorithm{\arabic{chapter}.\arabic{algorithm}}
+例子https://blog.csdn.net/miao0967020148/article/details/110677763

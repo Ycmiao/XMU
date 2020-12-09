@@ -37,6 +37,6 @@ QQ：1009155612
 
 \renewcommand{\algorithmicensure}{\textbf{输出:}}
 
- 
 \renewcommand\thealgorithm{\arabic{chapter}.\arabic{algorithm}}
+
 例子https://blog.csdn.net/miao0967020148/article/details/110677763

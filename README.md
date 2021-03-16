@@ -40,3 +40,12 @@ QQ：1009155612
 \renewcommand\thealgorithm{\arabic{chapter}.\arabic{algorithm}}
 
 例子https://blog.csdn.net/miao0967020148/article/details/110677763
+
+添加Wordcount.bat：统计文字个数
+cmd->命令提示符
+切换到文本所在的目录下
+cd E:\Thesis\XMU-thesis-template
+运行：
+.\Wordcount.bat clean           # 删除编译所产生的中间文件
+.\Wordcount.bat cleanall        # 删除 main.pdf 和所有中间文件
+.\Wordcount.bat wordcount       # 论文字数统计

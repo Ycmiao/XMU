@@ -2,14 +2,13 @@
 %% XMU-thesis-grd.cls for XMU Thesis
 %% modified by miao yongchun
 %% version: 1.0
-%% last update: Sept. 22th, 2020
+%% last update: March 21th, 2021
 %%==================================================
 
 %% math packages -- conflict with xunicode
 \RequirePackage{amsmath,amsthm,amsfonts,amssymb,bm,mathrsfs}
-% 直立希腊字母字体
+%% 直立希腊字母字体
 \RequirePackage{upgreek}
-
 \RequirePackage{lmodern}
 \NeedsTeXFormat{LaTeX2e}[2005/12/01]
 \ProvidesClass{XMU-thesis-grd}[2021/03/16 v1.2 XMU-thesis-grd document class]
@@ -28,6 +27,9 @@
 \else
 \LoadClass[zihao=-4,a4paper,oneside,openany,UTF8,space=auto]{ctexbook}
 \fi
+
+%% twoside 强制空白留在页底
+\raggedbottom
 
 %==================================================
 %% 定义字体
@@ -48,11 +50,13 @@
 %==================================================
 %% 定义格式命令
 %==================================================
+%% XMUspace
+%\newcommand\XMUspace{\protect\CTEX@spaceChar\protect\CTEX@spaceChar}
+\newcommand{\XMUspace}[1][1]{\hspace{#1\ccwd}}
 \def\contentsname{目\XMUspace 录}
 \def\encontentsname{Contents}
 \def\listfigurename{插\XMUspace 图}
 \def\listtablename{表\XMUspace 格}
-
 %%
 %% 中文封面标题命令
 %%
@@ -78,7 +82,6 @@
 %%
 %% 封面内容
 %%
-
 \def\XMU@value@classification{}
 \def\XMU@value@confidential{}
 \def\XMU@value@UDC{}
@@ -102,16 +105,6 @@
 \def\XMU@value@reviewer{}
 \def\XMU@value@statement{}
 
-
-%% 设置圆圈的格式或使用\textcircled
-\usepackage{tikz}
-\usepackage{etoolbox}
-\newcommand{\circled}[2][]{\tikz[baseline=(char.base)]
-    {\node[shape = circle, draw, inner sep = 1pt]
-    (char) {\phantom{\ifblank{#1}{#2}{#1}}};
-    \node at (char.center) {\makebox[0pt][c]{#2}};}}
-\robustify{\circled}
-
 %%
 %% 论文原创性声明
 %%
@@ -133,7 +126,7 @@
 \par 本学位论文属于：
 \par （\parbox[t]{45pt}{\quad}）1.经厦门大学保密委员会审查核定的涉密学位论文，于{\XMU@label@confidentialdate}解密，解密后适用上述授权。
 \par （\parbox[t]{45pt}{\quad}）2.不涉密，适用上述授权。
-\par （请在以上相应括号内打``\ensuremath{\checkmark}''或填上相应内容。涉密学位论文应是已经厦门大学保密委员会审定过的学位论文，未经厦门大学保密委员会审定的学位论文均为公开学位论文。此声明栏不填写的，默认为公开学位论文，均适用上述授权。）\par 
+\par （请在以上相应括号内打“$\surd$”或填上相应内容。涉密学位论文应是已经厦门大学保密委员会审定过的学位论文，未经厦门大学保密委员会审定的学位论文均为公开学位论文。此声明栏不填写的，默认为公开学位论文，均适用上述授权。）\par 
 }
 
 %%
@@ -163,10 +156,10 @@
 paper=a4paper,%
 top=3.0cm,% 上 3.0cm %
 bottom=2.54cm,% 下 2.54cm %
-left=2.7cm,% 左 2.7cm %
-right=2.7cm,% 右 2.7cm %
+left=3.17cm,% 左 2.7cm %
+right=3.17cm,% 右 2.7cm %
 headheight=2.0cm,% 页眉 2.0cm %
-footskip=1.75cm% 页脚 1.8cm %
+footskip=1.0cm% 页脚 1.8cm %
 ]{geometry} % 页面设置 %
 
 % 段后间距
@@ -176,15 +169,18 @@ footskip=1.75cm% 页脚 1.8cm %
 \def\cleardoublepage{\clearpage\if@twoside \ifodd\c@page\else
   \thispagestyle{empty}%
   \hbox{}\newpage\if@twocolumn\hbox{}\newpage\fi\fi\fi}
-%设置行距，大概为1.5
-\RequirePackage{setspace}
+  
+%设置行距，大概为1.5 避免过多间距空白 nodisplayskipstretch 
+\RequirePackage[nodisplayskipstretch]{setspace}
 \setstretch{1.523}
+%\renewcommand{\baselinestretch}{1.5}
 
+\RequirePackage{zhnumber}
 %%% 设置章节目格式
 %% 设置章节格式, 小3号加重黑体居中，行距22磅，与正文或节标题的间距设定为段后间距1行。章序号与章名间空一格。
 \ctexset{chapter={
       name = {第,章},
-      number = {\arabic{chapter}},
+      number = {\zhnum{chapter}},
       format = {\bfseries \heiti \centering \zihao{-3}},
       pagestyle = {XMU@headings},
       beforeskip = 16 bp,
@@ -192,34 +188,32 @@ footskip=1.75cm% 页脚 1.8cm %
       fixskip = true,
   }
 }
+
 %% 设置一级章节格式
 % 黑体四号加粗顶左，行距22磅，与上一节的间距为1行，与下面正文或节标题的段间间距为0.5行。序号与题目间空一格。
-
 \ctexset{section={
   format={\raggedright \bfseries \heiti \zihao{4}},
-  beforeskip = 16bp plus 1ex minus .2ex,
-  afterskip = 14bp plus .2ex,
+  beforeskip = 18bp plus 1ex minus .2ex,
+  afterskip = 12bp plus .2ex,
   fixskip = true,
   }
 }
 
 % 设置二级标题格式
 % 黑体小四加粗顶左，行距22磅，与上一节的间距为1行，与下面正文或节标题的段间间距为0.5行。序号与题目间空一格。 
-
 \ctexset{subsection={
    format = {\bfseries \heiti \raggedright \zihao{-4}},
-   beforeskip =16bp plus 1ex minus .2ex,
-   afterskip = 14bp plus .2ex,
+   beforeskip =18bp plus 1ex minus .2ex,
+   afterskip = 12bp plus .2ex,
    fixskip = true,
    }
 }
 
-
 % 设置三节标题格式
 \ctexset{subsubsection={
       format={\heiti \raggedright \zihao{-4}},
-      beforeskip=16bp plus 1ex minus .2ex,
-      afterskip=14bp plus .2ex,
+      beforeskip=12bp plus 1ex minus .2ex,
+      afterskip=12bp plus .2ex,
       fixskip=true,
   }
 }
@@ -230,22 +224,23 @@ footskip=1.75cm% 页脚 1.8cm %
 \addtocontents{lot}{\protect\hypersetup{hidelinks}}
 \addtocontents{lof}{\protect\hypersetup{hidelinks}}
 
+
 \RequirePackage{titletoc}
 \titlecontents{chapter}[0pt]{\heiti \zihao{4}}
-    {\bfseries\thecontentslabel\hspace{\ccwd}}{\bfseries}
-    {\hspace{.5em}\titlerule*{.}\contentspage}
-\titlecontents{section}[2\ccwd]{\heiti \zihao{-4}}
-    {\bfseries\thecontentslabel\hspace{\ccwd}}{\bfseries}
-    {\hspace{.5em}\titlerule*{.}\contentspage}
-\titlecontents{subsection}[4\ccwd]{\songti \zihao{-4}}
-    {\thecontentslabel\hspace{\ccwd}}{}
+    {\bfseries\thecontentslabel\hspace{.25em}}{\bfseries}
+    {\hspace{.5em}\bfseries\titlerule*{.}\contentspage}
+\titlecontents{section}[1\ccwd]{\heiti \zihao{-4}}
+    {\bfseries\thecontentslabel\hspace{.25em}}{\bfseries}
+    {\hspace{.5em}\bfseries\titlerule*{.}\contentspage}
+\titlecontents{subsection}[2\ccwd]{\songti \zihao{-4}}
+    {\thecontentslabel\hspace{.25em}}{}
     {\hspace{.5em}\titlerule*{.}\contentspage}
 
-\titlecontents{figure}[0pt]{\songti\zihao{-4}}
+\titlecontents{figure}[0em]{\songti\zihao{-4}}
     {\figurename~\thecontentslabel\quad}{\hspace*{-1.5cm}}
     {\hspace{.5em}\titlerule*{.}\contentspage}
 
-\titlecontents{table}[0pt]{\songti\zihao{-4}}
+\titlecontents{table}[0em]{\songti\zihao{-4}}
     {\tablename~\thecontentslabel\quad}{\hspace*{-1.5cm}}
     {\hspace{.5em}\titlerule*{.}\contentspage}
 
@@ -325,6 +320,7 @@ footskip=1.75cm% 页脚 1.8cm %
 \setsansfont{Arial}
 \setmonofont{Courier New}
 
+
 %% 设置圆圈脚注
 \RequirePackage{pifont}
 \RequirePackage[perpage,symbol*]{footmisc}
@@ -336,14 +332,13 @@ footskip=1.75cm% 页脚 1.8cm %
 \RequirePackage{graphicx}
 %% subfigure
 \RequirePackage{subfigure}
-
-
 \RequirePackage{wrapfig}
+%% 如果插入的图片没有指定扩展名，那么依次搜索下面的扩展名所对应的文件
+\DeclareGraphicsExtensions{.pdf,.eps,.png,.jpg,.jpeg}
+
 %% 设置图表标题选项 
-\RequirePackage{amsmath}
-\allowdisplaybreaks[4]
 \RequirePackage{caption}
-\DeclareCaptionLabelSeparator{zhspace}{\hspace{1\ccwd}}
+\DeclareCaptionLabelSeparator{zhspace}{\hspace{.25em}}
 \DeclareCaptionFont{fontsize}{\zihao{-4}}
 \captionsetup{
   font = {fontsize},
@@ -363,20 +358,13 @@ footskip=1.75cm% 页脚 1.8cm %
   belowskip = 6bp,
 }
 
-%% 如果插入的图片没有指定扩展名，那么依次搜索下面的扩展名所对应的文件
-\DeclareGraphicsExtensions{.pdf,.eps,.png,.jpg,.jpeg}
-% ccaption -- bicaption
-%\RequirePackage{ccaption}
-%\captiondelim{\ }
-%\captionnamefont{\songti\zihao{5}}
-%\captiontitlefont{\songti\zihao{5}}
 
 
 %% sort and compress citations
 \RequirePackage[numbers,square,comma,super,sort&compress]{natbib}
-% 上标引用
-\newcommand{\upcite}[1]{\textsuperscript{\cite{#1}}}
-
+%% 水平引用
+\RequirePackage{xpatch}
+\xpatchcmd\citenum{\NAT@parfalse}{\NAT@partrue}{}{}
  
 %% algorithm package
 \RequirePackage{algorithm,algorithmicx,algpseudocode}
@@ -385,59 +373,25 @@ footskip=1.75cm% 页脚 1.8cm %
 \renewcommand{\algorithmicensure}{\textbf{输出:}}
 
 
-% 将浮动参数设为较宽松的值
+%% 将浮动参数设为较宽松的值
 \renewcommand{\textfraction}{0.15}
 \renewcommand{\topfraction}{0.85}
 \renewcommand{\bottomfraction}{0.65}
 \renewcommand{\floatpagefraction}{0.60}
 
-% 定公式、图、表、算法编号为"3-1"的形式，即分隔符由.变为短杠
+%% 定公式、图、表、算法编号为"3-1"的形式，即分隔符由.变为短杠
 \renewcommand\theequation{\arabic{chapter}.\arabic{equation}}
 \renewcommand\thefigure{\arabic{chapter}.\arabic{figure}}
 \renewcommand\thetable{\arabic{chapter}.\arabic{table}}
 \renewcommand\thealgorithm{\arabic{chapter}.\arabic{algorithm}}
 \@addtoreset{algorithm}{chapter} 
 
-% 颜色宏包
+%% 颜色宏包
 \RequirePackage{xcolor}
 
 
-% 中文破折号
+%% 中文破折号
 \newcommand{\cndash}{\rule{0.0em}{0pt}\rule[0.35em]{1.4em}{0.05em}\rule{0.2em}{0pt}}
-
-% listings 源代码显示宏包
-\RequirePackage{listings}
-\lstset{tabsize=4, %
-  frame=shadowbox, %把代码用带有阴影的框圈起来
-  commentstyle=\color{red!50!green!50!blue!50},%浅灰色的注释
-  rulesepcolor=\color{red!20!green!20!blue!20},%代码块边框为淡青色
-  keywordstyle=\color{blue!90}\bfseries, %代码关键字的颜色为蓝色，粗体
-  showstringspaces=false,%不显示代码字符串中间的空格标记
-  stringstyle=\ttfamily, % 代码字符串的特殊格式
-  keepspaces=true, %
-  breakindent=22pt, %
-  numbers=left,%左侧显示行号
-  stepnumber=1,%
-  numberstyle=\tiny, %行号字体用小号
-  basicstyle=\footnotesize, %
-  showspaces=false, %
-  flexiblecolumns=true, %
-  breaklines=true, %对过长的代码自动换行
-  breakautoindent=true,%
-  breakindent=4em, %
-  aboveskip=1em, %代码块边框
-  %% added by http://bbs.ctex.org/viewthread.php?tid=53451
-  fontadjust,
-  captionpos=t,
-  framextopmargin=2pt,framexbottommargin=2pt,abovecaptionskip=-3pt,belowcaptionskip=3pt,
-  xleftmargin=4em,xrightmargin=4em, % 设定listing左右的空白
-  texcl=true,
-  % 设定中文冲突，断行，列模式，数学环境输入，listing数字的样式
-  extendedchars=false,columns=flexible,mathescape=true
-  numbersep=-1em
-}
-\renewcommand{\lstlistingname}{代码} %% 重命名Listings标题头
-
 
 %% hyperref package
 \definecolor{navyblue}{RGB}{0,0,128} 
@@ -457,18 +411,23 @@ footskip=1.75cm% 页脚 1.8cm %
 
 %% enumerate 列表环境间距调节
 \RequirePackage{enumitem}
-% \setenumerate[1]{itemsep=0pt,partopsep=0pt,parsep=\parskip,topsep=5pt}
+\setenumerate[1]{itemsep=0pt,partopsep=0pt,parsep=\parskip,topsep=0pt}
 \setitemize[1]{itemsep=0pt,partopsep=0pt,parsep=\parskip,topsep=0pt}
-% \setdescription{itemsep=0pt,partopsep=0pt,parsep=\parskip,topsep=5pt}
+\setdescription{itemsep=0pt,partopsep=0pt,parsep=\parskip,topsep=0pt}
 
+%% equation  公式环境间距调节
+\RequirePackage{amsmath}
+\allowdisplaybreaks[4]                 %强制公式跨页
+%\setlength{\abovedisplayskip}{-2em}     %公式前的距离
+%\setlength{\belowdisplayskip}{-2em}     %公式后面的距离
+%\setlength{\abovedisplayshortskip}{-2em}
+%\setlength{\belowdisplayshortskip}{-2em}
+ 
 %=========================================================
 %% 参考文献风格
 %=========================================================
 \bibliographystyle{GBT7714-2005NLang}
 
-%_ XMUspace
-%\newcommand\XMUspace{\protect\CTEX@spaceChar\protect\CTEX@spaceChar}
-\newcommand{\XMUspace}[1][1]{\hspace{#1\ccwd}}
 
 \def\XMU@getfileinfo#1 #2 #3\relax#4\relax{%
   \def\XMUfiledate{#1}%
@@ -525,16 +484,8 @@ footskip=1.75cm% 页脚 1.8cm %
 
   %udc ltz 
   { 
-   {\songti \zihao{-4} \noindent \bfseries 
-  	\parbox[l]{0.5\textwidth}{\raggedright \XMU@label@serialnumber \XMU@value@serialnumber}  
-    \parbox[r]{0.5\textwidth}{\raggedleft
-        \XMU@label@classification\XMUunderline[45pt]{\XMU@value@classification}
-  		\XMU@label@confidential\XMUunderline[45pt]{\XMU@value@confidential}} 
-   }\\
-   {\songti \zihao{-4} \bfseries  
-    \parbox[l]{0.5\textwidth}{\raggedright\XMU@label@studentnumber  \XMU@value@studentnumber}  
-    \parbox[r]{0.5\textwidth}{\raggedleft\XMU@label@UDC\XMUunderline[45pt]{\XMU@value@UDC}}
-   }
+   {\songti\zihao{-4} \noindent\bfseries \XMU@label@serialnumber \XMU@value@serialnumber } \\
+   {\songti\zihao{-4} \bfseries  \XMU@label@studentnumber  \XMU@value@studentnumber}
   }
    
    \begin{center}
@@ -565,18 +516,8 @@ footskip=1.75cm% 页脚 1.8cm %
      \XMU@label@defenddate & &  \@ifundefined{XMU@value@defenddate}{\parbox[t]{180pt}{\quad}} {\XMU@value@defenddate}\\
      \XMU@label@grantdate & & \@ifundefined{XMU@value@grantdate}{\parbox[t]{180pt}{\quad}}{\XMU@value@grantdate}  
     \end{tabular}}
-    \end{center}
-    \vskip \stretch{3}
-
     
-    {\songti\zihao{4} \bfseries
-    \begin{flushright}
-    \XMU@label@chairman \XMUunderline[80pt]{\XMU@value@chairman}~~~~~~~~~~~~ \\
-    \XMU@label@reviewer \XMUunderline[80pt]{\XMU@value@reviewer}~~~~~~~~~~~~ \\
-    \end{flushright}  
-    }
-    \vskip \stretch{0.5}
-    \begin{center}
+    \vskip \stretch{5}
     {\songti\zihao{4} \bfseries \XMU@value@submitdate }
     \end{center}
 
@@ -650,10 +591,16 @@ footskip=1.75cm% 页脚 1.8cm %
 %=========================================================
  \newenvironment{abstract}
  {
-  \cleardoublepage
-  \chapter{\XMU@label@abstract}}
- {}
-%下一页从偶数页开始
+ \cleardoublepage
+ \thispagestyle{empty}
+  \chapter{\XMU@label@abstract} 
+  }
+
+ % 中文关键词
+ \newcommand\keywords[1]{%
+   \vspace{2ex}\noindent{\bfseries \XMU@label@keywords} #1}
+    
+ %下一页从偶数页开始
  \newcommand\beginatevenpage{
  \clearpage
   \if@twoside
@@ -661,18 +608,16 @@ footskip=1.75cm% 页脚 1.8cm %
     \cleardoublepage
   \fi
  }
- % 中文关键词
- \newcommand\keywords[1]{%
-   \vspace{2ex}\noindent{\bfseries \XMU@label@keywords} #1}
-
+ 
  % 英文摘要
  \newenvironment{englishabstract}
  {
-  \clearpage
+  \cleardoublepage
+  \thispagestyle{empty}
   \chapter*{\XMU@label@englishabstract}
   \@mkboth{\MakeUppercase\XMU@label@englishabstract}{\MakeUppercase\XMU@label@englishabstract}%   
-   \addcontentsline{eoc}{chapter}{\XMU@label@englishabstract}}
- {}
+   \addcontentsline{eoc}{chapter}{\XMU@label@englishabstract}
+   }
 
  % 英文关键字
  \newcommand\englishkeywords[1]{%
@@ -682,7 +627,7 @@ footskip=1.75cm% 页脚 1.8cm %
 %% 中英文目录
 %=========================================================
 %% English contents, list it in eoc
-\newcommand\echapter[1]{\addcontentsline{eoc}{chapter}{\protect\numberline{\thechapter}#1}}
+\newcommand\echapter[1]{\addcontentsline{eoc}{chapter}{\protect\numberline{Chapter~\thechapter}#1}}
 \newcommand\esection[1]{\addcontentsline{eoc}{section}{\protect\numberline{\thesection}#1}}
 \newcommand\esubsection[1]{\addcontentsline{eoc}{subsection}{\protect\numberline{\thesubsection}#1}}
 \newcommand\esubsubsection[1]{\addcontentsline{eoc}{subsubsection}{\protect\numberline{\thesubsubsection}#1}}
@@ -697,6 +642,11 @@ footskip=1.75cm% 页脚 1.8cm %
   \@mkboth{\MakeUppercase\contentsname}{\MakeUppercase\contentsname}%
   \pdfbookmark[0]{目录}{XMUtoc}
   \@starttoc{toc}%
+   \clearpage
+  \if@twoside
+    \thispagestyle{empty}
+    \cleardoublepage
+  \fi
   \chapter*{\encontentsname}%英文目录里显示“英文目录”，否则\chapter*
   \@mkboth{\MakeUppercase\encontentsname}{\MakeUppercase\encontentsname}%
   \pdfbookmark[0]{英文目录}{XMUeoc}
@@ -712,9 +662,10 @@ footskip=1.75cm% 页脚 1.8cm %
 
 %=========================================================
 %% 参考文献环境
-%=========================================================  
-\renewenvironment{thebibliography}[1]
-     {\zihao{5}
+%========================================================= 
+
+\renewenvironment{thebibliography}[1]{
+      \zihao{5}
       \chapter*{\bibname}
       \@mkboth{\MakeUppercase\bibname}{\MakeUppercase\bibname}%
       \addcontentsline{toc}{chapter}{参考文献}
@@ -722,10 +673,9 @@ footskip=1.75cm% 页脚 1.8cm %
       \list{\@biblabel{\@arabic\c@enumiv}}%
            {\settowidth\labelwidth{\@biblabel{#1}}%
             \leftmargin\labelwidth
-            \advance\leftmargin\labelsep
-            \setlength{\parsep}{1mm}
+            \advance\leftmargin\labelsep            
             \setlength{\labelsep}{0.5em}
-            \setlength{\itemsep}{0.05pc}
+            \setlength{\itemsep}{-2mm}
             \setlength{\listparindent}{0in}
             \setlength{\itemindent}{0in}
             \setlength{\rightmargin}{0in}
@@ -739,7 +689,7 @@ footskip=1.75cm% 页脚 1.8cm %
       \widowpenalty4000%
       \sfcode`\.\@m}
      {\def\@noitemerr
-       {\@latex@warning{Empty `thebibliography' environment}}%
+       {\@latex@warning{Empty `thebibliography' environment}}
       \endlist}
 
 
@@ -752,9 +702,9 @@ footskip=1.75cm% 页脚 1.8cm %
            {\settowidth\labelwidth{\@biblabel{#1}}%
             \leftmargin\labelwidth
             \advance\leftmargin\labelsep
-            \setlength{\parsep}{1mm}
+            \setlength{\parsep}{0.5mm}
             \setlength{\labelsep}{0.5em}
-            \setlength{\itemsep}{0.05pc}
+            \setlength{\itemsep}{0.01pc}
             \setlength{\listparindent}{0in}
             \setlength{\itemindent}{0in}
             \setlength{\rightmargin}{0in}

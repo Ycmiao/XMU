@@ -2,7 +2,7 @@
 %% XMU-thesis-grd.cls for XMU Thesis
 %% modified by miao yongchun
 %% version: 1.0
-%% last update: March 21th, 2021
+%% last update: May 7th, 2021
 %%==================================================
 
 %% math packages -- conflict with xunicode
@@ -119,9 +119,9 @@
 \def\XMU@value@lab{}
 
 \def\XMU@label@originalcontent{\XMUspace\XMUspace 本人呈交的学位论文是本人在导师指导下，独立完成的研究成果。本人在论文写作中参考其他个人或集体已经发表的研究成果，均在文中以适当方式明确标明，并符合法律规范和《厦门大学研究生学术活动规范（试行）》。\par 另外，该学位论文为（\@ifundefined{XMUT@value@team}%
-    {\parbox[t]{200pt}{\quad}}{\XMUT@value@team}）课题（组）的研究成果，获得（\@ifundefined{XMUT@value@fundteam}{\parbox[t]{120pt}{\quad}}%
-    {\XMUT@value@fundteam}）课题（组）经费或实验室的资助，在（\@ifundefined{XMUT@value@lab}{\parbox[t]{120pt}{\quad}}%
-    {\XMUT@value@lab}）实验室完成。（请在以上括号内填写课题或课题组负责人或实验室名称，未有此项声明内容的，可以不作特别声明。）。\par 本人声明该学位论文不存在剽窃、抄袭等学术不端行为，并愿意承担因学术不端行为所带来的一切后果和法律责任。\par }
+    {\parbox[t]{186pt}{\quad}}{\XMUT@value@team}）课题（组）的研究成果，获得（\@ifundefined{XMUT@value@fundteam}{\parbox[t]{110pt}{\quad}}%
+    {\XMUT@value@fundteam}）课题（组）经费或实验室的资助，在（\@ifundefined{XMUT@value@lab}{\parbox[t]{110pt}{\quad}}{\XMUT@value@lab}）实验室完成。（请在以上括号内填写课题或课题组负责人或实验室名称，未有此项声明内容的，可以不作特别声明。）\par 本人声明该学位论文不存在剽窃、抄袭等学术不端行为，并愿意承担因学术不端行为所带来的一切后果和法律责任。\par }
+    
 \def\XMU@label@authorizationcontent{\XMUspace\XMUspace 本人同意厦门大学根据《中华人民共和国学位条例暂行实施办法》等规定保留和使用此学位论文，并向主管部门或其指定机构送交学位论文（包括纸质版和电子版），允许学位论文进入厦门大学图书馆及其数据库被查阅、借阅。本人同意厦门大学将学位论文加入全国博士、硕士学位论文共建单位数据库进行检索，将学位论文的标题和摘要汇编出版，采用影印、缩印或者其它方式合理复制学位论文。
 \par 本学位论文属于：
 \par （\parbox[t]{45pt}{\quad}）1.经厦门大学保密委员会审查核定的涉密学位论文，于{\XMU@label@confidentialdate}解密，解密后适用上述授权。
@@ -155,11 +155,11 @@
 \usepackage[%
 paper=a4paper,%
 top=3.0cm,% 上 3.0cm %
-bottom=2.54cm,% 下 2.54cm %
-left=3.17cm,% 左 2.7cm %
-right=3.17cm,% 右 2.7cm %
-headheight=2.0cm,% 页眉 2.0cm %
-footskip=1.0cm% 页脚 1.8cm %
+bottom=3.0cm,% 下 3.0cm %
+left=3.0cm,% 左 3.0cm %
+right=3.0cm,% 右 3.0cm %
+headheight=2.2cm,% 页眉 2.2cm %
+footskip=0.8cm% 页脚 3.0-2.2=0.8cm %
 ]{geometry} % 页面设置 %
 
 % 段后间距
@@ -170,21 +170,21 @@ footskip=1.0cm% 页脚 1.8cm %
   \thispagestyle{empty}%
   \hbox{}\newpage\if@twocolumn\hbox{}\newpage\fi\fi\fi}
   
-%设置行距，大概为1.5 避免过多间距空白 nodisplayskipstretch 
-\RequirePackage[nodisplayskipstretch]{setspace}
+%设置行距，大概为1.5 避免过多间距空白 nodisplayskipstretch[nodisplayskipstretch] 
+\RequirePackage{setspace}
 \setstretch{1.523}
-%\renewcommand{\baselinestretch}{1.5}
+ 
 
 \RequirePackage{zhnumber}
 %%% 设置章节目格式
 %% 设置章节格式, 小3号加重黑体居中，行距22磅，与正文或节标题的间距设定为段后间距1行。章序号与章名间空一格。
 \ctexset{chapter={
       name = {第,章},
-      number = {\zhnum{chapter}},
+      number = {\arabic{chapter}},
       format = {\bfseries \heiti \centering \zihao{-3}},
       pagestyle = {XMU@headings},
-      beforeskip = 16 bp,
-      afterskip = 32 bp,
+      beforeskip = 18 pt,
+      afterskip = 32 pt,
       fixskip = true,
   }
 }
@@ -193,8 +193,8 @@ footskip=1.0cm% 页脚 1.8cm %
 % 黑体四号加粗顶左，行距22磅，与上一节的间距为1行，与下面正文或节标题的段间间距为0.5行。序号与题目间空一格。
 \ctexset{section={
   format={\raggedright \bfseries \heiti \zihao{4}},
-  beforeskip = 18bp plus 1ex minus .2ex,
-  afterskip = 12bp plus .2ex,
+  beforeskip = 32 pt plus 1 ex minus .2 ex,
+  afterskip = 22 pt plus .2 ex,
   fixskip = true,
   }
 }
@@ -203,8 +203,8 @@ footskip=1.0cm% 页脚 1.8cm %
 % 黑体小四加粗顶左，行距22磅，与上一节的间距为1行，与下面正文或节标题的段间间距为0.5行。序号与题目间空一格。 
 \ctexset{subsection={
    format = {\bfseries \heiti \raggedright \zihao{-4}},
-   beforeskip =18bp plus 1ex minus .2ex,
-   afterskip = 12bp plus .2ex,
+   beforeskip = 21 pt plus 1 ex minus .2 ex,
+   afterskip = 15 pt plus .2 ex,
    fixskip = true,
    }
 }
@@ -212,8 +212,8 @@ footskip=1.0cm% 页脚 1.8cm %
 % 设置三节标题格式
 \ctexset{subsubsection={
       format={\heiti \raggedright \zihao{-4}},
-      beforeskip=12bp plus 1ex minus .2ex,
-      afterskip=12bp plus .2ex,
+      beforeskip = 21 pt plus 1 ex minus .2 ex,
+      afterskip = 15 pt plus .2 ex,
       fixskip=true,
   }
 }
@@ -228,10 +228,10 @@ footskip=1.0cm% 页脚 1.8cm %
 \RequirePackage{titletoc}
 \titlecontents{chapter}[0pt]{\heiti \zihao{4}}
     {\bfseries\thecontentslabel\hspace{.25em}}{\bfseries}
-    {\hspace{.5em}\bfseries\titlerule*{.}\contentspage}
+    {\hspace{.5em}\titlerule*{.}\contentspage}
 \titlecontents{section}[1\ccwd]{\heiti \zihao{-4}}
     {\bfseries\thecontentslabel\hspace{.25em}}{\bfseries}
-    {\hspace{.5em}\bfseries\titlerule*{.}\contentspage}
+    {\hspace{.5em}\titlerule*{.}\contentspage}
 \titlecontents{subsection}[2\ccwd]{\songti \zihao{-4}}
     {\thecontentslabel\hspace{.25em}}{}
     {\hspace{.5em}\titlerule*{.}\contentspage}
@@ -543,11 +543,11 @@ footskip=1.0cm% 页脚 1.8cm %
   {\songti\zihao{4}\XMU@label@originalcontent} 
   \vskip 40pt
   
-  \hfill{\songti\zihao{4}\XMU@label@authorsign} \hspace*{4cm} 
-
-  \hfill{\songti\zihao{4}\XMU@label@Supervisorsign} \hspace*{4cm} \\
-  \vskip 10pt
-  \hfill {\songti\zihao{4}\XMU@label@originalDate} \hspace*{4.2cm}
+  \hfill{\songti\zihao{4}\XMU@label@authorsign} \hspace*{3.3cm} 
+  \vskip 6pt
+  \hfill{\songti\zihao{4}\XMU@label@Supervisorsign} \hspace*{3.3cm} \\
+  \vskip 12pt
+  \hfill {\songti\zihao{4}\XMU@label@originalDate} \hspace*{3.5cm}
   
    
   \clearpage
@@ -569,12 +569,12 @@ footskip=1.0cm% 页脚 1.8cm %
   \end{center}
   \vskip 15pt
   {\zihao{4} \XMU@label@authorizationcontent}
-  \vskip 40pt
+  \vskip 50pt
    
 
-  \hfill{\songti\zihao{4}\XMU@label@authorsign} \hspace*{4cm} \\
+  \hfill{\songti\zihao{4}\XMU@label@authorsign} \hspace*{3.3cm} \\
   \vskip 10pt
-  \hfill {\songti\zihao{4}\XMU@label@originalDate} \hspace*{4.2cm}
+  \hfill {\songti\zihao{4}\XMU@label@originalDate} \hspace*{3.5cm}
    
    
   \clearpage

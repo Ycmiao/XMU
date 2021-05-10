@@ -2,7 +2,7 @@
 %% XMU-thesis-grd.cls for XMU Thesis
 %% modified by miao yongchun
 %% version: 1.0
-%% last update: May 7th, 2021
+%% last update: March 21th, 2021
 %%==================================================
 
 %% math packages -- conflict with xunicode
@@ -110,7 +110,7 @@
 %%
 \def\XMU@label@original{厦门大学学位论文原创性声明}
 \def\XMU@label@authorization{厦门大学学位论文著作权使用声明}
-\def\XMU@label@authorsign{声明人~~（签名）：}
+\def\XMU@label@authorsign{声明人~~~~（签名）：}
 \def\XMU@label@Supervisorsign{指导教师（签名）：}
 \def\XMU@label@originalDate{\hspace{30pt} 年\hspace{26pt}月\hspace{26pt}日}
 
@@ -138,7 +138,7 @@
 \def\XMU@label@englishkeywords{Key Words:~}
 \def\XMU@label@conclusion{结\XMUspace 论}
 \def\XMU@label@appendix{附\XMUspace 录}
-\def\XMU@label@publications{攻读博士学位期间取得的成果}
+\def\XMU@label@publications{在学期间完成的相关学术成果}
 \def\XMU@label@projects{攻读学位期间参与的项目}
 \def\XMU@label@resume{作者简介}
 \def\XMU@label@reference{参考文献}
@@ -443,7 +443,7 @@ footskip=0.8cm% 页脚 3.0-2.2=0.8cm %
   \underline{\hbox to #1{\hfill#2\hfill}}}
 \def\XMUunderline{\@ifnextchar[\XMU@underline\underline}
 
-
+\RequirePackage{ragged2e}
 %=========================================================
 %% 封面中文可用命令
 %=========================================================
@@ -593,7 +593,8 @@ footskip=0.8cm% 页脚 3.0-2.2=0.8cm %
  {
  \cleardoublepage
  \thispagestyle{empty}
-  \chapter{\XMU@label@abstract} 
+  \chapter{\XMU@label@abstract}
+  \addcontentsline{eoc}{chapter}{Abstract-Chinese} 
   }
 
  % 中文关键词
@@ -615,8 +616,9 @@ footskip=0.8cm% 页脚 3.0-2.2=0.8cm %
   \cleardoublepage
   \thispagestyle{empty}
   \chapter*{\XMU@label@englishabstract}
-  \@mkboth{\MakeUppercase\XMU@label@englishabstract}{\MakeUppercase\XMU@label@englishabstract}%   
-   \addcontentsline{eoc}{chapter}{\XMU@label@englishabstract}
+  \@mkboth{\XMU@label@englishabstract}{\MakeUppercase\XMU@label@englishabstract}%
+   \addcontentsline{toc}{chapter}{Abstract}
+   \addcontentsline{eoc}{chapter}{Abstract-English}
    }
 
  % 英文关键字
@@ -640,7 +642,8 @@ footskip=0.8cm% 页脚 3.0-2.2=0.8cm %
   \fi
   \chapter*{\contentsname}%目录里显示“目录”，否则\chapter*
   \@mkboth{\MakeUppercase\contentsname}{\MakeUppercase\contentsname}%
-  \pdfbookmark[0]{目录}{XMUtoc}
+  \addcontentsline{toc}{chapter}{\contentsname}
+  %\pdfbookmark[0]{目录}{XMUtoc}
   \@starttoc{toc}%
    \clearpage
   \if@twoside
@@ -648,8 +651,9 @@ footskip=0.8cm% 页脚 3.0-2.2=0.8cm %
     \cleardoublepage
   \fi
   \chapter*{\encontentsname}%英文目录里显示“英文目录”，否则\chapter*
-  \@mkboth{\MakeUppercase\encontentsname}{\MakeUppercase\encontentsname}%
-  \pdfbookmark[0]{英文目录}{XMUeoc}
+  \@mkboth{\encontentsname}{\MakeUppercase\encontentsname}
+  \addcontentsline{eoc}{chapter}{\encontentsname}
+  \pdfbookmark[0]{英文目录}{XMUeoc}  
   \@starttoc{eoc}%
   \if@restonecol\twocolumn\fi
   
@@ -667,7 +671,7 @@ footskip=0.8cm% 页脚 3.0-2.2=0.8cm %
 \renewenvironment{thebibliography}[1]{
       \zihao{5}
       \chapter*{\bibname}
-      \@mkboth{\MakeUppercase\bibname}{\MakeUppercase\bibname}%
+      \@mkboth{\bibname}{\MakeUppercase\bibname}%
       \addcontentsline{toc}{chapter}{参考文献}
       \addcontentsline{eoc}{chapter}{References}
       \list{\@biblabel{\@arabic\c@enumiv}}%
@@ -692,12 +696,18 @@ footskip=0.8cm% 页脚 3.0-2.2=0.8cm %
        {\@latex@warning{Empty `thebibliography' environment}}
       \endlist}
 
+\renewenvironment{thanks}
+  {\chapter{\XMU@label@thanks}
+   \@mkboth{\XMU@label@thanks}{\MakeUppercase\XMU@label@thanks}%
+    \addcontentsline{eoc}{chapter}{Acknowledgements} } 
+  {}
+  
 
 \newenvironment{publications}[1]
      {\chapter{\XMU@label@publications}%
       \@mkboth{\MakeUppercase\XMU@label@publications}
               {\MakeUppercase\XMU@label@publications}%
-      \addcontentsline{eoc}{chapter}{List of Publications}     
+      \addcontentsline{eoc}{chapter}{Relevant Academic Achievements Completed During the Academic Period}     
       \list{\@biblabel{\@arabic\c@enumiv}}%
            {\settowidth\labelwidth{\@biblabel{#1}}%
             \leftmargin\labelwidth
@@ -763,12 +773,7 @@ footskip=0.8cm% 页脚 3.0-2.2=0.8cm %
    \item\relax}
    {\endlist}
 
-\renewenvironment{thanks}
-  {\chapter{\XMU@label@thanks}
-   \@mkboth{\MakeUppercase\XMU@label@thanks}{\MakeUppercase\XMU@label@thanks}%
-    \addcontentsline{eoc}{chapter}{Thanks} } 
-  {}
-  
+
 \newenvironment{symbolnote}
   {\chapter{\XMU@label@symbolnote}
   \fangsong}

@@ -6,7 +6,7 @@
 %%==================================================
 
 %% math packages -- conflict with xunicode
-\RequirePackage{amsmath,amsthm,amsfonts,amssymb,bm,mathrsfs}
+\RequirePackage{amsmath,amsthm,amsfonts,amssymb,bm,mathrsfs,mfirstuc}
 %% 直立希腊字母字体
 \RequirePackage{upgreek}
 \RequirePackage{lmodern}
@@ -34,19 +34,31 @@
 %==================================================
 %% 定义字体
 %==================================================
+\RequirePackage{latexbug}
+\RequirePackage{fontspec}
 \let\songti\relax
 \let\kaishu\relax
 \let\heiti\relax
-\newCJKfontfamily\songti{SimSun}[AutoFakeBold]
+
+\newCJKfontfamily\sonti{SimSun}[BoldFont=FandolSong-Bold] 
+%\newCJKfontfamily\songti{}[AutoFakeBold]
 \newCJKfontfamily\kaishu{KaiTi}[AutoFakeBold]
 \newCJKfontfamily\heiti{SimHei}[AutoFakeBold]
+
+\setCJKmainfont{SimSun}[BoldFont=FandolSong-Bold,ItalicFont=KaiTi]
+
 \DeclareFontFamily{U}{rsfs}{\skewchar\font127 }
 \DeclareFontShape{U}{rsfs}{m}{n}{%
    <-6> rsfs5
    <6-8> rsfs7
    <8-> rsfs10
 }{}
-
+%% 英文字体使用 Times New Roman
+\RequirePackage{xltxtra} % \XeTeX Logo
+\setmainfont{Times New Roman}
+\setsansfont{Arial}
+\setmonofont{Courier New}
+\newfontfamily\contentef{Arial}  
 %==================================================
 %% 定义格式命令
 %==================================================
@@ -218,6 +230,13 @@ footskip=0.8cm% 页脚 3.0-2.2=0.8cm %
   }
 }
 
+%% English contents, list it in eoc
+\newcommand\echapter[1]{\addcontentsline{eoc}{chapter}{\protect\numberline{ Chapter~\thechapter}#1}}
+\newcommand\esection[1]{\addcontentsline{eoc}{section}{\protect\numberline{\thesection}#1}}
+\newcommand\esubsection[1]{\addcontentsline{eoc}{subsection}{\protect\numberline{\thesubsection}#1}}
+\newcommand\esubsubsection[1]{\addcontentsline{eoc}{subsubsection}{\protect\numberline{\thesubsubsection}#1}}
+
+
 %% 设定目录格式。目录颜色更改黑色
 \addtocontents{toc}{\protect\hypersetup{hidelinks}}
 \addtocontents{eoc}{\protect\hypersetup{hidelinks}}
@@ -226,10 +245,10 @@ footskip=0.8cm% 页脚 3.0-2.2=0.8cm %
 
 
 \RequirePackage{titletoc}
-\titlecontents{chapter}[0pt]{\heiti \zihao{4}}
+\titlecontents{chapter}[0pt]{\heiti \contentef \zihao{4}}
     {\bfseries\thecontentslabel\hspace{.25em}}{\bfseries}
     {\hspace{.5em}\titlerule*{.}\contentspage}
-\titlecontents{section}[1\ccwd]{\heiti \zihao{-4}}
+\titlecontents{section}[1\ccwd]{\heiti \contentef \zihao{-4}}
     {\bfseries\thecontentslabel\hspace{.25em}}{\bfseries}
     {\hspace{.5em}\titlerule*{.}\contentspage}
 \titlecontents{subsection}[2\ccwd]{\songti \zihao{-4}}
@@ -244,7 +263,7 @@ footskip=0.8cm% 页脚 3.0-2.2=0.8cm %
     {\tablename~\thecontentslabel\quad}{\hspace*{-1.5cm}}
     {\hspace{.5em}\titlerule*{.}\contentspage}
 
-
+    
 %% 选择编译
 \RequirePackage{ifthen}
 
@@ -257,12 +276,14 @@ footskip=0.8cm% 页脚 3.0-2.2=0.8cm %
 % 空页眉页脚
 \fancypagestyle{XMU@empty}{%
   \fancyhf{}}
-
+  
+% 页眉首字母大写
+\renewcommand{\chaptermark}[1]{\markboth{ 第\thechapter 章 ~ \ #1}{}} 
 %% 正文页眉页脚
 \fancypagestyle{XMU@headings}{%
   \fancyhf{}
   \fancyfoot[C]{\songti\zihao{5} \thepage}
-  \fancyhead[CO]{\zihao{5} \songti \leftmark}
+  \fancyhead[CO]{\zihao{5} \songti \nouppercase \leftmark}
   \fancyhead[CE]{\zihao{5} \songti {\XMU@value@title}}                
   }
 %% 对于openright 选项，必须保证章页右开，且如果前章末页内容须清空其页眉页脚
@@ -314,11 +335,7 @@ footskip=0.8cm% 页脚 3.0-2.2=0.8cm %
   \newtheorem{case}{情形~}
 \renewcommand{\proofname}{\bf 证明}
 
-%% 英文字体使用 Times New Roman
-\RequirePackage{xltxtra} % \XeTeX Logo
-\setmainfont{Times New Roman}
-\setsansfont{Arial}
-\setmonofont{Courier New}
+
 
 
 %% 设置圆圈脚注
@@ -381,8 +398,8 @@ footskip=0.8cm% 页脚 3.0-2.2=0.8cm %
 
 %% 定公式、图、表、算法编号为"3-1"的形式，即分隔符由.变为短杠
 \renewcommand\theequation{\arabic{chapter}.\arabic{equation}}
-\renewcommand\thefigure{\arabic{chapter}.\arabic{figure}}
-\renewcommand\thetable{\arabic{chapter}.\arabic{table}}
+\renewcommand\thefigure{\arabic{chapter}.\arabic{figure}：}
+\renewcommand\thetable{\arabic{chapter}.\arabic{table}：}
 \renewcommand\thealgorithm{\arabic{chapter}.\arabic{algorithm}}
 \@addtoreset{algorithm}{chapter} 
 
@@ -418,15 +435,11 @@ footskip=0.8cm% 页脚 3.0-2.2=0.8cm %
 %% equation  公式环境间距调节
 \RequirePackage{amsmath}
 \allowdisplaybreaks[4]                 %强制公式跨页
-%\setlength{\abovedisplayskip}{-2em}     %公式前的距离
-%\setlength{\belowdisplayskip}{-2em}     %公式后面的距离
-%\setlength{\abovedisplayshortskip}{-2em}
-%\setlength{\belowdisplayshortskip}{-2em}
  
 %=========================================================
 %% 参考文献风格
 %=========================================================
-\bibliographystyle{GBT7714-2005NLang}
+\bibliographystyle{GBT7714-87NLang}
 
 
 \def\XMU@getfileinfo#1 #2 #3\relax#4\relax{%
@@ -518,7 +531,7 @@ footskip=0.8cm% 页脚 3.0-2.2=0.8cm %
     \end{tabular}}
     
     \vskip \stretch{5}
-    {\songti\zihao{4} \bfseries \XMU@value@submitdate }
+    {\songti\zihao{4} \bfseries \XMU@value@grantdate }
     \end{center}
 
   \vskip \stretch{0.5}
@@ -591,15 +604,17 @@ footskip=0.8cm% 页脚 3.0-2.2=0.8cm %
 %=========================================================
  \newenvironment{abstract}
  {
- \cleardoublepage
- \thispagestyle{empty}
-  \chapter{\XMU@label@abstract}
+  \cleardoublepage
+  \thispagestyle{empty}
+  \chapter*{\XMU@label@abstract}
+  \@mkboth{\XMU@label@abstract}{\MakeUppercase\XMU@label@abstract}
+  \addcontentsline{toc}{chapter}{\XMU@label@abstract}
   \addcontentsline{eoc}{chapter}{Abstract-Chinese} 
   }
 
  % 中文关键词
  \newcommand\keywords[1]{%
-   \vspace{2ex}\noindent{\bfseries \XMU@label@keywords} #1}
+   \vspace{2ex}\noindent{\bfseries  \XMU@label@keywords} #1}
     
  %下一页从偶数页开始
  \newcommand\beginatevenpage{
@@ -628,11 +643,6 @@ footskip=0.8cm% 页脚 3.0-2.2=0.8cm %
 %=========================================================
 %% 中英文目录
 %=========================================================
-%% English contents, list it in eoc
-\newcommand\echapter[1]{\addcontentsline{eoc}{chapter}{\protect\numberline{Chapter~\thechapter}#1}}
-\newcommand\esection[1]{\addcontentsline{eoc}{section}{\protect\numberline{\thesection}#1}}
-\newcommand\esubsection[1]{\addcontentsline{eoc}{subsection}{\protect\numberline{\thesubsection}#1}}
-\newcommand\esubsubsection[1]{\addcontentsline{eoc}{subsubsection}{\protect\numberline{\thesubsubsection}#1}}
 
 \renewcommand\tableofcontents{%
   \if@twocolumn
@@ -641,7 +651,7 @@ footskip=0.8cm% 页脚 3.0-2.2=0.8cm %
   \@restonecolfalse
   \fi
   \chapter*{\contentsname}%目录里显示“目录”，否则\chapter*
-  \@mkboth{\MakeUppercase\contentsname}{\MakeUppercase\contentsname}%
+  \@mkboth{\contentsname}{\MakeUppercase\contentsname}%
   \addcontentsline{toc}{chapter}{\contentsname}
   %\pdfbookmark[0]{目录}{XMUtoc}
   \@starttoc{toc}%
@@ -705,7 +715,7 @@ footskip=0.8cm% 页脚 3.0-2.2=0.8cm %
 
 \newenvironment{publications}[1]
      {\chapter{\XMU@label@publications}%
-      \@mkboth{\MakeUppercase\XMU@label@publications}
+      \@mkboth{\XMU@label@publications}
               {\MakeUppercase\XMU@label@publications}%
       \addcontentsline{eoc}{chapter}{Relevant Academic Achievements Completed During the Academic Period}     
       \list{\@biblabel{\@arabic\c@enumiv}}%
@@ -734,7 +744,7 @@ footskip=0.8cm% 页脚 3.0-2.2=0.8cm %
 
 \newenvironment{projects}[1]
      {\chapter{\XMU@label@projects}%
-      \@mkboth{\MakeUppercase\XMU@label@projects}
+      \@mkboth{\XMU@label@projects}
               {\MakeUppercase\XMU@label@projects}%
       \list{\@biblabel{\@arabic\c@enumiv}}%
            {\settowidth\labelwidth{\@biblabel{#1}}%

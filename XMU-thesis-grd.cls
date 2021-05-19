@@ -34,7 +34,6 @@
 %==================================================
 %% 定义字体
 %==================================================
-\RequirePackage{latexbug}
 \RequirePackage{fontspec}
 \let\songti\relax
 \let\kaishu\relax
@@ -58,12 +57,12 @@
 \setmainfont{Times New Roman}
 \setsansfont{Arial}
 \setmonofont{Courier New}
-\newfontfamily\contentef{Arial}  
+\newfontfamily\arial{Arial}
+\newfontfamily\newman{Times New Roman}    
 %==================================================
 %% 定义格式命令
 %==================================================
 %% XMUspace
-%\newcommand\XMUspace{\protect\CTEX@spaceChar\protect\CTEX@spaceChar}
 \newcommand{\XMUspace}[1][1]{\hspace{#1\ccwd}}
 \def\contentsname{目\XMUspace 录}
 \def\encontentsname{Contents}
@@ -102,7 +101,6 @@
 \def\XMU@value@degree{}
 \def\XMU@value@title{~~~~~（论~文~题~目）~~~~~}
 \def\XMU@value@entitle{ }
-\def\XMU@value@vtitle{竖排论文题目}
 \def\XMU@value@titlemark{\XMU@value@title}
 \def\XMU@value@author{（作~者~姓~名）}
 \def\XMU@value@advisor{（姓名、专业技术职务、学位）}
@@ -122,6 +120,9 @@
 %%
 \def\XMU@label@original{厦门大学学位论文原创性声明}
 \def\XMU@label@authorization{厦门大学学位论文著作权使用声明}
+\def\XMU@label@committees{学位论文答辩委员会名单}
+\def\XMU@label@defenseDate{答辩时间：}
+\def\XMU@label@defensePlace{答辩地点：}
 \def\XMU@label@authorsign{声明人~~~~（签名）：}
 \def\XMU@label@Supervisorsign{指导教师（签名）：}
 \def\XMU@label@originalDate{\hspace{30pt} 年\hspace{26pt}月\hspace{26pt}日}
@@ -129,6 +130,8 @@
 \def\XMU@value@team{}
 \def\XMU@value@fundteam{}
 \def\XMU@value@lab{}
+\def\XMU@value@defenseDate{}
+\def\XMU@value@defensePlace{}
 
 \def\XMU@label@originalcontent{\XMUspace\XMUspace 本人呈交的学位论文是本人在导师指导下，独立完成的研究成果。本人在论文写作中参考其他个人或集体已经发表的研究成果，均在文中以适当方式明确标明，并符合法律规范和《厦门大学研究生学术活动规范（试行）》。\par 另外，该学位论文为（\@ifundefined{XMUT@value@team}%
     {\parbox[t]{186pt}{\quad}}{\XMUT@value@team}）课题（组）的研究成果，获得（\@ifundefined{XMUT@value@fundteam}{\parbox[t]{110pt}{\quad}}%
@@ -141,6 +144,17 @@
 \par （请在以上相应括号内打“$\surd$”或填上相应内容。涉密学位论文应是已经厦门大学保密委员会审定过的学位论文，未经厦门大学保密委员会审定的学位论文均为公开学位论文。此声明栏不填写的，默认为公开学位论文，均适用上述授权。）\par 
 }
 
+\def\XMU@label@committeeslist{
+%\resizebox{\textwidth}{!}{}
+\begin{tabular*}{\textwidth}{cc@{\extracolsep{\fill}\quad}ccc}
+		主席 & 赵XX & 厦门大学 & 教授& 博士生导师\\
+		委员 & 刘XX & 厦门大学 & 教授& 博士生导师\\
+		  & 杨XX & 厦门大学 & 教授& 博士生导师\\
+		  & 杨XX & 中山大学 & 教授& 博士生导师\\
+		 &  杨XX& 厦门大学 & 教授& 博士生导师\\
+		 & 杨XX & 厦门大学 & 教授& 博士生导师\\
+		秘书 & 杨XX & 厦门大学 & 副教授& 硕士生导师\\
+\end{tabular*}}
 %%
 %% 论文原创性声明
 %%
@@ -230,6 +244,8 @@ footskip=0.8cm% 页脚 3.0-2.2=0.8cm %
   }
 }
 
+
+  
 %% English contents, list it in eoc
 \newcommand\echapter[1]{\addcontentsline{eoc}{chapter}{\protect\numberline{ Chapter~\thechapter}#1}}
 \newcommand\esection[1]{\addcontentsline{eoc}{section}{\protect\numberline{\thesection}#1}}
@@ -245,12 +261,12 @@ footskip=0.8cm% 页脚 3.0-2.2=0.8cm %
 
 
 \RequirePackage{titletoc}
-\titlecontents{chapter}[0pt]{\heiti \contentef \zihao{4}}
+\titlecontents{chapter}[0pt]{\heiti \arial \zihao{4}}
     {\bfseries\thecontentslabel\hspace{.25em}}{\bfseries}
-    {\hspace{.5em}\titlerule*{.}\contentspage}
-\titlecontents{section}[1\ccwd]{\heiti \contentef \zihao{-4}}
+    {\newman \hspace{.5em}\titlerule*{.}\contentspage}
+\titlecontents{section}[1\ccwd]{\heiti \zihao{-4}}
     {\bfseries\thecontentslabel\hspace{.25em}}{\bfseries}
-    {\hspace{.5em}\titlerule*{.}\contentspage}
+    {\newman\hspace{.5em}\titlerule*{.}\contentspage}
 \titlecontents{subsection}[2\ccwd]{\songti \zihao{-4}}
     {\thecontentslabel\hspace{.25em}}{}
     {\hspace{.5em}\titlerule*{.}\contentspage}
@@ -262,7 +278,7 @@ footskip=0.8cm% 页脚 3.0-2.2=0.8cm %
 \titlecontents{table}[0em]{\songti\zihao{-4}}
     {\tablename~\thecontentslabel\quad}{\hspace*{-1.5cm}}
     {\hspace{.5em}\titlerule*{.}\contentspage}
-
+ 
     
 %% 选择编译
 \RequirePackage{ifthen}
@@ -323,7 +339,7 @@ footskip=0.8cm% 页脚 3.0-2.2=0.8cm %
 
 \theoremstyle{plain}
   \newtheorem{algo}{算法~}[chapter]
-  \newtheorem{thm}{定理~}[chapter]
+  \newtheorem{thm}{定义~}[chapter]
   \newtheorem{lem}[thm]{引理~}
   \newtheorem{prop}[thm]{命题~}
   \newtheorem{cor}[thm]{推论~}
@@ -375,7 +391,7 @@ footskip=0.8cm% 页脚 3.0-2.2=0.8cm %
   belowskip = 6bp,
 }
 
-
+\newcommand{\captionwithsource}[2]{\caption{#1}{\leftline{\zihao{-5} 资料来源：{#2} }}}
 
 %% sort and compress citations
 \RequirePackage[numbers,square,comma,super,sort&compress]{natbib}
@@ -398,8 +414,8 @@ footskip=0.8cm% 页脚 3.0-2.2=0.8cm %
 
 %% 定公式、图、表、算法编号为"3-1"的形式，即分隔符由.变为短杠
 \renewcommand\theequation{\arabic{chapter}.\arabic{equation}}
-\renewcommand\thefigure{\arabic{chapter}.\arabic{figure}：}
-\renewcommand\thetable{\arabic{chapter}.\arabic{table}：}
+\renewcommand\thefigure{\arabic{chapter}.\arabic{figure}}
+\renewcommand\thetable{\arabic{chapter}.\arabic{table}}
 \renewcommand\thealgorithm{\arabic{chapter}.\arabic{algorithm}}
 \@addtoreset{algorithm}{chapter} 
 
@@ -472,7 +488,6 @@ footskip=0.8cm% 页脚 3.0-2.2=0.8cm %
   \def\XMU@value@titlemark{\MakeUppercase{#1}}}
   
 \newcommand\entitle[1]{\def\XMU@value@entitle{#1}}  
-\newcommand\vtitle[1]{\def\XMU@value@vtitle{#1}}
 \renewcommand\author[1]{\def\XMU@value@author{#1}}
 \newcommand\advisor[1]{\def\XMU@value@advisor{#1}}
 \newcommand\advisorinstitute[1]{\def\XMU@value@advisorinstitute{#1}}
@@ -547,7 +562,7 @@ footskip=0.8cm% 页脚 3.0-2.2=0.8cm %
 %=========================================================
 \newcommand\makeDeclareOriginal{%
   \cleardoublepage
-  \pdfbookmark[0]{原创声明}{statement}
+  \pdfbookmark[0]{原创声明}{original}
   \thispagestyle{empty}
   \begin{center}
   {\heiti\zihao{-2} \XMU@label@original}
@@ -575,13 +590,13 @@ footskip=0.8cm% 页脚 3.0-2.2=0.8cm %
 %=========================================================
 \newcommand\makeDeclareCopyright{%
  \cleardoublepage
- \pdfbookmark[0]{版权声明}{statement}
+ \pdfbookmark[0]{版权声明}{copyright}
  \thispagestyle{empty}
   \begin{center}
   {\heiti\zihao{-2} \XMU@label@authorization}
   \end{center}
   \vskip 15pt
-  {\zihao{4} \XMU@label@authorizationcontent}
+  {\songti \zihao{4} \XMU@label@authorizationcontent}
   \vskip 50pt
    
 
@@ -598,6 +613,38 @@ footskip=0.8cm% 页脚 3.0-2.2=0.8cm %
 
 }
 
+%=========================================================
+%% 答辩委员会名单
+%=========================================================
+\newcommand\defensedate[1]{\def\XMU@value@defenseDate{#1}}
+\newcommand\defenseplace[1]{\def\XMU@value@defensePlace{#1}}
+
+\newcommand\makeCommitteesList{%
+ \cleardoublepage
+ \pdfbookmark[0]{委员名单}{committees}
+ \thispagestyle{empty}
+  \begin{center}
+  {\heiti\zihao{-3} \XMU@label@committees}
+  \end{center}
+  \vskip 15pt
+  \begin{center}
+  {\songti \zihao{4} \XMU@label@committeeslist}
+  \end{center}
+  \vskip 35pt
+   
+  {
+  {\songti\zihao{4}\noindent \XMU@label@defenseDate \XMU@value@defenseDate}  \\
+  {\songti\zihao{4}\XMU@label@defensePlace \XMU@value@defensePlace}
+  } 
+   
+   
+  \clearpage
+  \if@twoside
+    \thispagestyle{empty}
+    \cleardoublepage
+  \fi
+
+}
 
 %=========================================================
 %% 中英文摘要

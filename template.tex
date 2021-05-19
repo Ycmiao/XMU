@@ -20,16 +20,19 @@
 % 封面内容
 \serialnumber{10384}
 \studentnumber{23320170155540}
-\title{**}
-\entitle{**}
-\author{苗永春}
-\advisor{\makebox[7em][s]{孙\hspace{\fill}海\hspace{\fill}信\quad 教\hspace{\fill}授}}
-\degree{工学博士}
-\major{\makebox[7em][s]{通信与信息系统}}
 \school{厦门大学}
-\defenddate{\makebox[7em][s]{2021 \quad 年\quad   月}}
-\submitdate{\makebox[7em][s]{2021 \quad 年\quad   月}}
-\grantdate{\makebox[7em][s]{2021 \quad 年\quad   月}}
+\degree{工学博士}
+\title{***}
+\entitle{***}
+\author{***}
+\advisor{\makebox[7em][s]{孙\hspace{\fill}海\hspace{\fill}信\quad 教\hspace{\fill}授}}
+\major{\makebox[7em][s]{通信与信息系统}}
+\submitdate{\makebox[7em][s]{2021\hspace{\fill}年\hspace{\fill}3\hspace{\fill}月}}
+\defenddate{\makebox[7em][s]{2021\hspace{\fill}年\hspace{\fill}5\hspace{\fill}月}}\grantdate{\makebox[7em][s]{2021\hspace{\fill}年\hspace{\fill}6\hspace{\fill}月}}
+
+% 答辩
+\defensedate{2021年5月16日下午}
+\defenseplace{厦门大学海韵园行政A-306会议室}
 
 % 封面绘制
 \makeInfo
@@ -40,6 +43,9 @@
 
 % 论文版权声明
 \makeDeclareCopyright
+
+% 答辩委员会名单
+\makeCommitteesList
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% 前置部分
@@ -72,13 +78,17 @@
 
 %% 各章正文内容
 \include{chapters/chapter1}
-
+\include{chapters/chapter2}
+\include{chapters/chapter3}
+\include{chapters/chapter4}
+\include{chapters/chapter5}
+\include{chapters/chapter6} 
 
 \include{chapters/conclusion}
 
 %% 参考文献，五号字，使用 BibTeX，包含参考文献文件.bib
-%\bibliography{reference/ref1,reference/ref2,reference/ref3}
-\bibliography{reference/ref1}
+\bibliography{reference/ref1,reference/ref2,reference/ref3}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% 后置部分
@@ -93,10 +103,10 @@
 %(其后部分无编号)
 \backmatter
 
-% 发表文章目录
-\include{chapters/pub}
 % 致谢
 \include{chapters/thanks}
 
+% 发表文章目录
+\include{chapters/pub}
 
 \end{document}

@@ -35,16 +35,18 @@
 %% 定义字体
 %==================================================
 \RequirePackage{fontspec}
+\RequirePackage[fakebold]{zhfont}
+
 \let\songti\relax
 \let\kaishu\relax
 \let\heiti\relax
 
-\newCJKfontfamily\sonti{SimSun}[BoldFont=FandolSong-Bold] 
-%\newCJKfontfamily\songti{}[AutoFakeBold]
+\newCJKfontfamily\sonti{SimSun}[BoldFont=Source Han Serif SC Bold]
+%\newCJKfontfamily\songti{},[AutoFakeBold] ,
 \newCJKfontfamily\kaishu{KaiTi}[AutoFakeBold]
 \newCJKfontfamily\heiti{SimHei}[AutoFakeBold]
 
-\setCJKmainfont{SimSun}[BoldFont=FandolSong-Bold,ItalicFont=KaiTi]
+\setCJKmainfont{SimSun}[BoldFont=Source Han Serif SC Bold,ItalicFont=KaiTi]
 
 \DeclareFontFamily{U}{rsfs}{\skewchar\font127 }
 \DeclareFontShape{U}{rsfs}{m}{n}{%
@@ -198,7 +200,7 @@ footskip=0.8cm% 页脚 3.0-2.2=0.8cm %
   
 %设置行距，大概为1.5 避免过多间距空白 nodisplayskipstretch[nodisplayskipstretch] 
 \RequirePackage{setspace}
-\setstretch{1.523}
+\setstretch{1.5889}
  
 
 \RequirePackage{zhnumber}
@@ -247,7 +249,7 @@ footskip=0.8cm% 页脚 3.0-2.2=0.8cm %
 
   
 %% English contents, list it in eoc
-\newcommand\echapter[1]{\addcontentsline{eoc}{chapter}{\protect\numberline{ Chapter~\thechapter}#1}}
+\newcommand\echapter[1]{\addcontentsline{eoc}{chapter}{\protect\numberline{Chapter~\thechapter}#1}}
 \newcommand\esection[1]{\addcontentsline{eoc}{section}{\protect\numberline{\thesection}#1}}
 \newcommand\esubsection[1]{\addcontentsline{eoc}{subsection}{\protect\numberline{\thesubsection}#1}}
 \newcommand\esubsubsection[1]{\addcontentsline{eoc}{subsubsection}{\protect\numberline{\thesubsubsection}#1}}
@@ -264,7 +266,7 @@ footskip=0.8cm% 页脚 3.0-2.2=0.8cm %
 \titlecontents{chapter}[0pt]{\heiti \arial \zihao{4}}
     {\bfseries\thecontentslabel\hspace{.25em}}{\bfseries}
     {\newman \hspace{.5em}\titlerule*{.}\contentspage}
-\titlecontents{section}[1\ccwd]{\heiti \zihao{-4}}
+\titlecontents{section}[1\ccwd]{\heiti \arial \zihao{-4}}
     {\bfseries\thecontentslabel\hspace{.25em}}{\bfseries}
     {\newman\hspace{.5em}\titlerule*{.}\contentspage}
 \titlecontents{subsection}[2\ccwd]{\songti \zihao{-4}}
@@ -339,7 +341,7 @@ footskip=0.8cm% 页脚 3.0-2.2=0.8cm %
 
 \theoremstyle{plain}
   \newtheorem{algo}{算法~}[chapter]
-  \newtheorem{thm}{定义~}[chapter]
+  \newtheorem{thm}{定理~}[chapter]
   \newtheorem{lem}[thm]{引理~}
   \newtheorem{prop}[thm]{命题~}
   \newtheorem{cor}[thm]{推论~}
@@ -413,7 +415,7 @@ footskip=0.8cm% 页脚 3.0-2.2=0.8cm %
 \renewcommand{\floatpagefraction}{0.60}
 
 %% 定公式、图、表、算法编号为"3-1"的形式，即分隔符由.变为短杠
-\renewcommand\theequation{\arabic{chapter}.\arabic{equation}}
+\renewcommand\theequation{\arabic{chapter}-\arabic{equation}}
 \renewcommand\thefigure{\arabic{chapter}.\arabic{figure}}
 \renewcommand\thetable{\arabic{chapter}.\arabic{table}}
 \renewcommand\thealgorithm{\arabic{chapter}.\arabic{algorithm}}
@@ -428,16 +430,17 @@ footskip=0.8cm% 页脚 3.0-2.2=0.8cm %
 
 %% hyperref package
 \definecolor{navyblue}{RGB}{0,0,128} 
+
 \RequirePackage{hyperref}
 \hypersetup{
   bookmarksnumbered,%
   linktoc=all,
   colorlinks=true,
-  citecolor=navyblue,
+  citecolor=black,
   filecolor=cyan,
-  linkcolor=navyblue,
-  linkbordercolor=navyblue,
-  urlcolor=navyblue,
+  linkcolor=black,
+  linkbordercolor=black,
+  urlcolor=black,
   plainpages=false,%
   pdfstartview=FitH
 }
@@ -448,8 +451,11 @@ footskip=0.8cm% 页脚 3.0-2.2=0.8cm %
 \setitemize[1]{itemsep=0pt,partopsep=0pt,parsep=\parskip,topsep=0pt}
 \setdescription{itemsep=0pt,partopsep=0pt,parsep=\parskip,topsep=0pt}
 
+%% equation  公式编号括号
+\RequirePackage{mathtools}
+\newtagform{brackets}{（}{）}
+\usetagform{brackets}
 %% equation  公式环境间距调节
-\RequirePackage{amsmath}
 \allowdisplaybreaks[4]                 %强制公式跨页
  
 %=========================================================
@@ -677,9 +683,9 @@ footskip=0.8cm% 页脚 3.0-2.2=0.8cm %
  {
   \cleardoublepage
   \thispagestyle{empty}
-  \chapter*{\XMU@label@englishabstract}
+  \chapter*{\arial{\XMU@label@englishabstract}}
   \@mkboth{\XMU@label@englishabstract}{\MakeUppercase\XMU@label@englishabstract}%
-   \addcontentsline{toc}{chapter}{Abstract}
+   \addcontentsline{toc}{chapter}{\newman{Abstract}}
    \addcontentsline{eoc}{chapter}{Abstract-English}
    }
 
@@ -697,7 +703,7 @@ footskip=0.8cm% 页脚 3.0-2.2=0.8cm %
   \else
   \@restonecolfalse
   \fi
-  \chapter*{\contentsname}%目录里显示“目录”，否则\chapter*
+  \chapter*{\zihao{3}\contentsname}%目录里显示“目录”，否则\chapter*
   \@mkboth{\contentsname}{\MakeUppercase\contentsname}%
   \addcontentsline{toc}{chapter}{\contentsname}
   %\pdfbookmark[0]{目录}{XMUtoc}
@@ -707,7 +713,7 @@ footskip=0.8cm% 页脚 3.0-2.2=0.8cm %
     \thispagestyle{empty}
     \cleardoublepage
   \fi
-  \chapter*{\encontentsname}%英文目录里显示“英文目录”，否则\chapter*
+  \chapter*{\arial\zihao{3}\encontentsname}%英文目录里显示“英文目录”，否则\chapter*
   \@mkboth{\encontentsname}{\MakeUppercase\encontentsname}
   \addcontentsline{eoc}{chapter}{\encontentsname}
   \pdfbookmark[0]{英文目录}{XMUeoc}  

@@ -22,9 +22,9 @@
 \studentnumber{23320170155540}
 \school{厦门大学}
 \degree{工学博士}
-\title{***}
-\entitle{***}
-\author{***}
+\title{多目标水声信号辨识技术研究}
+\entitle{Research on Recognition Technologies for Underwater Acoustic Signals from Multiple Targets}
+\author{苗永春}
 \advisor{\makebox[7em][s]{孙\hspace{\fill}海\hspace{\fill}信\quad 教\hspace{\fill}授}}
 \major{\makebox[7em][s]{通信与信息系统}}
 \submitdate{\makebox[7em][s]{2021\hspace{\fill}年\hspace{\fill}3\hspace{\fill}月}}
@@ -33,6 +33,7 @@
 % 答辩
 \defensedate{2021年5月16日下午}
 \defenseplace{厦门大学海韵园行政A-306会议室}
+
 
 % 封面绘制
 \makeInfo
@@ -52,6 +53,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \frontmatter
  
+\setcounter{blankpages}{0}
 
 % 摘要
 \include{chapters/abstract}
@@ -76,13 +78,10 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \mainmatter
 
+\setcounter{blankpages}{0}
 %% 各章正文内容
 \include{chapters/chapter1}
-\include{chapters/chapter2}
-\include{chapters/chapter3}
-\include{chapters/chapter4}
-\include{chapters/chapter5}
-\include{chapters/chapter6} 
+
 
 \include{chapters/conclusion}
 
@@ -95,14 +94,12 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %% 附录(章节编号重新计算，使用字母进行编号)
+\appendix
+\renewcommand\theequation{\Alph{chapter}-\arabic{equation}}  % 附录中编号形式是"A-1"的样子
+\renewcommand\echapter[1]{\addcontentsline{eoc}{chapter}{\protect\numberline{\arial{ Appendix}~\thechapter}#1}}
+\include{chapters/app1} 
 
-%\appendix
-%\include{chapters/app1} 
-%\include{chapters/app2} 
-
-%(其后部分无编号)
 \backmatter
-
 % 致谢
 \include{chapters/thanks}
 

@@ -41,29 +41,30 @@
 \let\kaishu\relax
 \let\heiti\relax
 
-\newCJKfontfamily\sonti{SimSun}[BoldFont=Source Han Serif SC Bold]
-%\newCJKfontfamily\songti{},[AutoFakeBold] ,
+\newCJKfontfamily\sonti{SimSun}[BoldFont=Source Han Serif SC Bold,ItalicFont=KaiTi]
 \newCJKfontfamily\kaishu{KaiTi}[AutoFakeBold]
 \newCJKfontfamily\heiti{SimHei}[AutoFakeBold]
-
 \setCJKmainfont{SimSun}[BoldFont=Source Han Serif SC Bold,ItalicFont=KaiTi]
 
-\DeclareFontFamily{U}{rsfs}{\skewchar\font127 }
-\DeclareFontShape{U}{rsfs}{m}{n}{%
-   <-6> rsfs5
-   <6-8> rsfs7
-   <8-> rsfs10
-}{}
 %% 英文字体使用 Times New Roman
 \RequirePackage{xltxtra} % \XeTeX Logo
 \setmainfont{Times New Roman}
 \setsansfont{Arial}
 \setmonofont{Courier New}
 \newfontfamily\arial{Arial}
-\newfontfamily\newman{Times New Roman}    
+\newfontfamily\newman{Times New Roman} 
+
+%% 抑制字体设置提醒
+\DeclareFontFamily{U}{rsfs}{\skewchar\font127 }
+\DeclareFontShape{U}{rsfs}{m}{n}{%
+   <-6> rsfs5
+   <6-8> rsfs7
+   <8-> rsfs10
+}{}  
 %==================================================
 %% 定义格式命令
 %==================================================
+
 %% XMUspace
 \newcommand{\XMUspace}[1][1]{\hspace{#1\ccwd}}
 \def\contentsname{目\XMUspace 录}
@@ -136,7 +137,7 @@
 \def\XMU@value@defensePlace{}
 
 \def\XMU@label@originalcontent{\XMUspace\XMUspace 本人呈交的学位论文是本人在导师指导下，独立完成的研究成果。本人在论文写作中参考其他个人或集体已经发表的研究成果，均在文中以适当方式明确标明，并符合法律规范和《厦门大学研究生学术活动规范（试行）》。\par 另外，该学位论文为（\@ifundefined{XMUT@value@team}%
-    {\parbox[t]{186pt}{\quad}}{\XMUT@value@team}）课题（组）的研究成果，获得（\@ifundefined{XMUT@value@fundteam}{\parbox[t]{110pt}{\quad}}%
+    {\parbox[t]{186pt}{\quad}}{\XMUT@value@team}）课题（组）的研究成果，获得（\@ifundefined{XMUT@value@fundteam}{\parbox[t]{134pt}{\quad}}%
     {\XMUT@value@fundteam}）课题（组）经费或实验室的资助，在（\@ifundefined{XMUT@value@lab}{\parbox[t]{110pt}{\quad}}{\XMUT@value@lab}）实验室完成。（请在以上括号内填写课题或课题组负责人或实验室名称，未有此项声明内容的，可以不作特别声明。）\par 本人声明该学位论文不存在剽窃、抄袭等学术不端行为，并愿意承担因学术不端行为所带来的一切后果和法律责任。\par }
     
 \def\XMU@label@authorizationcontent{\XMUspace\XMUspace 本人同意厦门大学根据《中华人民共和国学位条例暂行实施办法》等规定保留和使用此学位论文，并向主管部门或其指定机构送交学位论文（包括纸质版和电子版），允许学位论文进入厦门大学图书馆及其数据库被查阅、借阅。本人同意厦门大学将学位论文加入全国博士、硕士学位论文共建单位数据库进行检索，将学位论文的标题和摘要汇编出版，采用影印、缩印或者其它方式合理复制学位论文。
@@ -191,17 +192,22 @@ footskip=0.8cm% 页脚 3.0-2.2=0.8cm %
 ]{geometry} % 页面设置 %
 
 % 段后间距
+\setlength{\parskip}{0em}
 %%\parskip 0.5ex plus 0.25ex minus 0.25ex
 
+\newcounter{blankpages}
 %% Command -- Clear Double Page
-\def\cleardoublepage{\clearpage\if@twoside \ifodd\c@page\else
-  \thispagestyle{empty}%
-  \hbox{}\newpage\if@twocolumn\hbox{}\newpage\fi\fi\fi}
+\def\cleardoublepage{\clearpage\if@twoside\ifodd\c@page\else
+  \thispagestyle{empty}  
+  \hbox{}\newpage \stepcounter{blankpages}\if@twocolumn\hbox{}\newpage\fi\fi\fi}
   
-%设置行距，大概为1.5 避免过多间距空白 nodisplayskipstretch[nodisplayskipstretch] 
-\RequirePackage{setspace}
+%设置行距，大概为1.5 避免过多间距空白 nodisplayskipstretch 
+\RequirePackage[nodisplayskipstretch]{setspace}
 \setstretch{1.5889}
  
+
+%
+\thickmuskip=1mu plus 1mu 
 
 \RequirePackage{zhnumber}
 %%% 设置章节目格式
@@ -210,6 +216,7 @@ footskip=0.8cm% 页脚 3.0-2.2=0.8cm %
       name = {第,章},
       number = {\arabic{chapter}},
       format = {\bfseries \heiti \centering \zihao{-3}},
+      aftername = {\hspace{0.5em}},
       pagestyle = {XMU@headings},
       beforeskip = 18 pt,
       afterskip = 32 pt,
@@ -221,6 +228,7 @@ footskip=0.8cm% 页脚 3.0-2.2=0.8cm %
 % 黑体四号加粗顶左，行距22磅，与上一节的间距为1行，与下面正文或节标题的段间间距为0.5行。序号与题目间空一格。
 \ctexset{section={
   format={\raggedright \bfseries \heiti \zihao{4}},
+  aftername = {\hspace{0.5em}},
   beforeskip = 32 pt plus 1 ex minus .2 ex,
   afterskip = 22 pt plus .2 ex,
   fixskip = true,
@@ -231,6 +239,7 @@ footskip=0.8cm% 页脚 3.0-2.2=0.8cm %
 % 黑体小四加粗顶左，行距22磅，与上一节的间距为1行，与下面正文或节标题的段间间距为0.5行。序号与题目间空一格。 
 \ctexset{subsection={
    format = {\bfseries \heiti \raggedright \zihao{-4}},
+   aftername = {\hspace{0.5em}},
    beforeskip = 21 pt plus 1 ex minus .2 ex,
    afterskip = 15 pt plus .2 ex,
    fixskip = true,
@@ -240,6 +249,7 @@ footskip=0.8cm% 页脚 3.0-2.2=0.8cm %
 % 设置三节标题格式
 \ctexset{subsubsection={
       format={\heiti \raggedright \zihao{-4}},
+      aftername = {\hspace{0.5em}},
       beforeskip = 21 pt plus 1 ex minus .2 ex,
       afterskip = 15 pt plus .2 ex,
       fixskip=true,
@@ -264,13 +274,13 @@ footskip=0.8cm% 页脚 3.0-2.2=0.8cm %
 
 \RequirePackage{titletoc}
 \titlecontents{chapter}[0pt]{\heiti \arial \zihao{4}}
-    {\bfseries\thecontentslabel\hspace{.25em}}{\bfseries}
+    {\bfseries\thecontentslabel\hspace{1em}}{\bfseries}
     {\newman \hspace{.5em}\titlerule*{.}\contentspage}
 \titlecontents{section}[1\ccwd]{\heiti \arial \zihao{-4}}
-    {\bfseries\thecontentslabel\hspace{.25em}}{\bfseries}
+    {\bfseries\thecontentslabel\hspace{1em}}{\bfseries}
     {\newman\hspace{.5em}\titlerule*{.}\contentspage}
 \titlecontents{subsection}[2\ccwd]{\songti \zihao{-4}}
-    {\thecontentslabel\hspace{.25em}}{}
+    {\thecontentslabel\hspace{1em}}{}
     {\hspace{.5em}\titlerule*{.}\contentspage}
 
 \titlecontents{figure}[0em]{\songti\zihao{-4}}
@@ -296,35 +306,46 @@ footskip=0.8cm% 页脚 3.0-2.2=0.8cm %
   \fancyhf{}}
   
 % 页眉首字母大写
-\renewcommand{\chaptermark}[1]{\markboth{ 第\thechapter 章 ~ \ #1}{}} 
+%\renewcommand{\chaptermark}[1]{\markboth{\chapter\XMUspace #1}{}} 
 %% 正文页眉页脚
-\fancypagestyle{XMU@headings}{%
+
+\fancypagestyle{XMU@headings}{
   \fancyhf{}
   \fancyfoot[C]{\songti\zihao{5} \thepage}
   \fancyhead[CO]{\zihao{5} \songti \nouppercase \leftmark}
   \fancyhead[CE]{\zihao{5} \songti {\XMU@value@title}}                
   }
 %% 对于openright 选项，必须保证章页右开，且如果前章末页内容须清空其页眉页脚
+
 \let\XMU@cleardoublepage\cleardoublepage
 \newcommand{\XMU@clearemptydoublepage}{%
 	\clearpage{\pagestyle{XMU@empty}\XMU@cleardoublepage}}
 \let\cleardoublepage\XMU@clearemptydoublepage
 
+\newcommand{\@romannoblank}[1]{%
+  \@Roman{\numexpr#1-\value{blankpages}\relax}%
+}
+
+\newcommand{\@arabicnoblank}[1]{%
+  \@arabic{\numexpr#1-\value{blankpages}\relax}%
+}
 %% 修该frontmatter 的页码为大写罗马格式，并调整页面风格
 \renewcommand{\frontmatter}{
  \if@openright\cleardoublepage\else\clearpage\fi
   \@mainmatterfalse
-  \pagenumbering{Roman}
+  \pagenumbering{romannoblank}
   \pagestyle{XMU@headings}
 }
 %% 修改mainmatter 的页码为阿拉伯格式，并调整页面风格
 \renewcommand{\mainmatter}{
   \if@openright\cleardoublepage\else\clearpage\fi
   \@mainmattertrue
-  \pagenumbering{arabic}
+  \pagenumbering{arabicnoblank}
   \pagestyle{XMU@headings}
 }
 
+ 
+    
 %% 复杂表格
 \RequirePackage{threeparttable}
 \RequirePackage{dcolumn}
@@ -354,14 +375,21 @@ footskip=0.8cm% 页脚 3.0-2.2=0.8cm %
 \renewcommand{\proofname}{\bf 证明}
 
 
-
-
 %% 设置圆圈脚注
 \RequirePackage{pifont}
-\RequirePackage[perpage,symbol*]{footmisc}
-\DefineFNsymbols{circled}{{\ding{192}}{\ding{193}}{\ding{194}}
-{\ding{195}}{\ding{196}}{\ding{197}}{\ding{198}}{\ding{199}}{\ding{200}}{\ding{201}}}
-\setfnsymbol{circled}
+\RequirePackage{scrextend}
+\deffootnote{1em}{1.5em}{\thefootnotemark\hspace{0.5em}}
+
+\renewcommand{\footnoterule}{% Kerns avoid vertical space
+\kern -3pt
+\moveright 2em\vbox{\hrule width 5cm}\nointerlineskip
+\kern 2.6pt} 
+
+\RequirePackage{tikz}
+\newcommand*\circled[1]{%
+  \tikz[baseline=(char.base)]\node[shape=circle,draw,inner sep=0.2pt,font=\tiny,minimum size=9pt] (char) {#1};}
+\renewcommand\thefootnote{\protect\circled{\arabic{footnote}}}
+
 
 %% graphics packages
 \RequirePackage{graphicx}
@@ -373,11 +401,10 @@ footskip=0.8cm% 页脚 3.0-2.2=0.8cm %
 
 %% 设置图表标题选项 
 \RequirePackage{caption}
-\DeclareCaptionLabelSeparator{zhspace}{\hspace{.25em}}
+\DeclareCaptionLabelSeparator{zhspace}{\hspace{.5em}}
 \DeclareCaptionFont{fontsize}{\zihao{-4}}
 \captionsetup{
   font = {fontsize},
-  labelsep = zhspace,
   labelfont = bf,
   textfont  = bf,
 }
@@ -415,15 +442,15 @@ footskip=0.8cm% 页脚 3.0-2.2=0.8cm %
 \renewcommand{\floatpagefraction}{0.60}
 
 %% 定公式、图、表、算法编号为"3-1"的形式，即分隔符由.变为短杠
-\renewcommand\theequation{\arabic{chapter}-\arabic{equation}}
 \renewcommand\thefigure{\arabic{chapter}.\arabic{figure}}
 \renewcommand\thetable{\arabic{chapter}.\arabic{table}}
+\renewcommand\theequation{\arabic{chapter}-\arabic{equation}}
 \renewcommand\thealgorithm{\arabic{chapter}.\arabic{algorithm}}
 \@addtoreset{algorithm}{chapter} 
 
+
 %% 颜色宏包
 \RequirePackage{xcolor}
-
 
 %% 中文破折号
 \newcommand{\cndash}{\rule{0.0em}{0pt}\rule[0.35em]{1.4em}{0.05em}\rule{0.2em}{0pt}}
@@ -447,13 +474,13 @@ footskip=0.8cm% 页脚 3.0-2.2=0.8cm %
 
 %% enumerate 列表环境间距调节
 \RequirePackage{enumitem}
-\setenumerate[1]{itemsep=0pt,partopsep=0pt,parsep=\parskip,topsep=0pt}
-\setitemize[1]{itemsep=0pt,partopsep=0pt,parsep=\parskip,topsep=0pt}
-\setdescription{itemsep=0pt,partopsep=0pt,parsep=\parskip,topsep=0pt}
+\setenumerate[1]{itemsep=0pt,partopsep=0pt,parsep=0pt,topsep=0pt}
+\setitemize[1]{itemsep=0pt,partopsep=0pt,parsep=0pt,topsep=0pt}
+\setdescription{itemsep=0pt,partopsep=0pt,parsep=0pt,topsep=0pt}
 
-%% equation  公式编号括号
+%% 定义  子图、公式编号括号为中文
 \RequirePackage{mathtools}
-\newtagform{brackets}{（}{）}
+\newtagform{brackets}{\hspace{.1em}（}{）}
 \usetagform{brackets}
 %% equation  公式环境间距调节
 \allowdisplaybreaks[4]                 %强制公式跨页
@@ -505,7 +532,18 @@ footskip=0.8cm% 页脚 3.0-2.2=0.8cm %
 \newcommand\chairman[1]{\def\XMU@value@chairman{#1}}
 \newcommand\reviewer[1]{\def\XMU@value@reviewer{#1}}
 
-
+%下一页从偶数页开始
+\newcommand\beginatpage{
+  \cleardoublepage
+  \thispagestyle{empty}
+ }
+%%下一页从偶数页开始
+\newcommand\beginatevenpage{
+    \clearpage
+    \if@twoside
+    \cleardoublepage
+    \fi
+ }
 %=========================================================
 %% 封面
 %=========================================================
@@ -513,9 +551,7 @@ footskip=0.8cm% 页脚 3.0-2.2=0.8cm %
 \newcommand\makeInfo[1]%
  {
   \newpage
-  \cleardoublepage
-  \thispagestyle{empty}
-
+  \beginatpage
   %udc ltz 
   { 
    {\songti\zihao{-4} \noindent\bfseries \XMU@label@serialnumber \XMU@value@serialnumber } \\
@@ -557,19 +593,14 @@ footskip=0.8cm% 页脚 3.0-2.2=0.8cm %
 
   \vskip \stretch{0.5}
   \clearpage
-  \if@twoside
-    \thispagestyle{empty}
-    \cleardoublepage
-  \fi
 }
 
 %=========================================================
 %% 原创性声明
 %=========================================================
-\newcommand\makeDeclareOriginal{%
-  \cleardoublepage
+\newcommand\makeDeclareOriginal{
+  \beginatpage
   \pdfbookmark[0]{原创声明}{original}
-  \thispagestyle{empty}
   \begin{center}
   {\heiti\zihao{-2} \XMU@label@original}
   \end{center}
@@ -582,22 +613,15 @@ footskip=0.8cm% 页脚 3.0-2.2=0.8cm %
   \hfill{\songti\zihao{4}\XMU@label@Supervisorsign} \hspace*{3.3cm} \\
   \vskip 12pt
   \hfill {\songti\zihao{4}\XMU@label@originalDate} \hspace*{3.5cm}
-  
-   
-  \clearpage
-  \if@twoside
-    \thispagestyle{empty}
-    \cleardoublepage
-  \fi
+  \clearpage 
 }
 
 %=========================================================
 %% 版权声明
 %=========================================================
-\newcommand\makeDeclareCopyright{%
- \cleardoublepage
+\newcommand\makeDeclareCopyright{ 
+ \beginatpage
  \pdfbookmark[0]{版权声明}{copyright}
- \thispagestyle{empty}
   \begin{center}
   {\heiti\zihao{-2} \XMU@label@authorization}
   \end{center}
@@ -609,14 +633,7 @@ footskip=0.8cm% 页脚 3.0-2.2=0.8cm %
   \hfill{\songti\zihao{4}\XMU@label@authorsign} \hspace*{3.3cm} \\
   \vskip 10pt
   \hfill {\songti\zihao{4}\XMU@label@originalDate} \hspace*{3.5cm}
-   
-   
-  \clearpage
-  \if@twoside
-    \thispagestyle{empty}
-    \cleardoublepage
-  \fi
-
+  \clearpage 
 }
 
 %=========================================================
@@ -625,10 +642,9 @@ footskip=0.8cm% 页脚 3.0-2.2=0.8cm %
 \newcommand\defensedate[1]{\def\XMU@value@defenseDate{#1}}
 \newcommand\defenseplace[1]{\def\XMU@value@defensePlace{#1}}
 
-\newcommand\makeCommitteesList{%
- \cleardoublepage
+\newcommand\makeCommitteesList{ 
+ \beginatpage
  \pdfbookmark[0]{委员名单}{committees}
- \thispagestyle{empty}
   \begin{center}
   {\heiti\zihao{-3} \XMU@label@committees}
   \end{center}
@@ -642,14 +658,7 @@ footskip=0.8cm% 页脚 3.0-2.2=0.8cm %
   {\songti\zihao{4}\noindent \XMU@label@defenseDate \XMU@value@defenseDate}  \\
   {\songti\zihao{4}\XMU@label@defensePlace \XMU@value@defensePlace}
   } 
-   
-   
-  \clearpage
-  \if@twoside
-    \thispagestyle{empty}
-    \cleardoublepage
-  \fi
-
+   \clearpage 
 }
 
 %=========================================================
@@ -658,36 +667,27 @@ footskip=0.8cm% 页脚 3.0-2.2=0.8cm %
  \newenvironment{abstract}
  {
   \cleardoublepage
-  \thispagestyle{empty}
-  \chapter*{\XMU@label@abstract}
+  \chapter*{ \normalfont \heiti \XMU@label@abstract}
   \@mkboth{\XMU@label@abstract}{\MakeUppercase\XMU@label@abstract}
   \addcontentsline{toc}{chapter}{\XMU@label@abstract}
   \addcontentsline{eoc}{chapter}{Abstract-Chinese} 
-  }
+  }{}
 
  % 中文关键词
- \newcommand\keywords[1]{%
+ \newcommand\keywords[1]{ 
    \vspace{2ex}\noindent{\bfseries  \XMU@label@keywords} #1}
-    
- %下一页从偶数页开始
- \newcommand\beginatevenpage{
- \clearpage
-  \if@twoside
-    \thispagestyle{empty}
-    \cleardoublepage
-  \fi
- }
  
+ \beginatevenpage 
+
  % 英文摘要
  \newenvironment{englishabstract}
- {
-  \cleardoublepage
-  \thispagestyle{empty}
+ { 
+  \clearpage
   \chapter*{\arial{\XMU@label@englishabstract}}
   \@mkboth{\XMU@label@englishabstract}{\MakeUppercase\XMU@label@englishabstract}%
    \addcontentsline{toc}{chapter}{\newman{Abstract}}
    \addcontentsline{eoc}{chapter}{Abstract-English}
-   }
+   }{}
 
  % 英文关键字
  \newcommand\englishkeywords[1]{%
@@ -697,7 +697,7 @@ footskip=0.8cm% 页脚 3.0-2.2=0.8cm %
 %% 中英文目录
 %=========================================================
 
-\renewcommand\tableofcontents{%
+\renewcommand\tableofcontents{
   \if@twocolumn
   \@restonecoltrue\onecolumn
   \else
@@ -706,25 +706,16 @@ footskip=0.8cm% 页脚 3.0-2.2=0.8cm %
   \chapter*{\zihao{3}\contentsname}%目录里显示“目录”，否则\chapter*
   \@mkboth{\contentsname}{\MakeUppercase\contentsname}%
   \addcontentsline{toc}{chapter}{\contentsname}
-  %\pdfbookmark[0]{目录}{XMUtoc}
-  \@starttoc{toc}%
-   \clearpage
-  \if@twoside
-    \thispagestyle{empty}
-    \cleardoublepage
-  \fi
+  \addcontentsline{eoc}{chapter}{Contents-Chinese}
+  \pdfbookmark[0]{目录}{XMUtoc}
+  \@starttoc{toc} 
   \chapter*{\arial\zihao{3}\encontentsname}%英文目录里显示“英文目录”，否则\chapter*
   \@mkboth{\encontentsname}{\MakeUppercase\encontentsname}
-  \addcontentsline{eoc}{chapter}{\encontentsname}
+  \addcontentsline{toc}{chapter}{\encontentsname}
+  \addcontentsline{eoc}{chapter}{Contents-English}
   \pdfbookmark[0]{英文目录}{XMUeoc}  
   \@starttoc{eoc}%
   \if@restonecol\twocolumn\fi
-  
-  \clearpage
-  \if@twoside
-    \thispagestyle{empty}
-    \cleardoublepage
-  \fi
 }
 
 %=========================================================
@@ -816,25 +807,6 @@ footskip=0.8cm% 页脚 3.0-2.2=0.8cm %
        {\@latex@warning{Empty `projects' environment}}%
       \endlist}
 
-    \newenvironment{resume}
-  {\chapter{\XMU@label@resume}}
-  {}
-
-\newenvironment{resumesection}[1]
-  {{\noindent\normalfont\bfseries #1}
-   \list{}{\labelwidth\z@
-           \leftmargin 2\ccwd}
-   \item\relax}
-   {\endlist}
-
-\newenvironment{resumeli}[1]
-  {{\noindent\normalfont\bfseries #1}
-   \list{}{\labelwidth\z@
-           \leftmargin 4\ccwd
-           \itemindent -2\ccwd
-           \listparindent\itemindent}
-   \item\relax}
-   {\endlist}
 
 
 \newenvironment{symbolnote}
@@ -862,9 +834,10 @@ footskip=0.8cm% 页脚 3.0-2.2=0.8cm %
       \setlength{\listparindent}{0cm} % 段落缩进量
       \setlength{\topsep}{0pt} % 标签与上文的间距
      }}{\end{list}}
-     %====增加化学、国际单位宏包
-     \RequirePackage[version=4]{mhchem}
-     \RequirePackage{siunitx}
+
+%====增加化学、国际单位宏包
+\RequirePackage[version=4]{mhchem}
+\RequirePackage{siunitx}
 \setcounter{secnumdepth}{4}  % 章节编号深度 (part 对应 -1)
 \setcounter{tocdepth}{2}     % 目录深度 (part 对应 -1)
 

@@ -1,4 +1,9 @@
-# XMU
+# XMU  中英文版本
+
+英文版本：下载XMU-egthesis-template.rar
+
+
+
 
 windows系统点击运行XMU-thesis-run.bat脚本
 

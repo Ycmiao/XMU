@@ -1,14 +1,16 @@
 # XMU  中英文版本
 
-英文版本：下载XMU-egthesis-template.rar
+## 英文版本：
 
-%%%%
-windows系统点击运行XMU-thesis-run.bat脚本
-
-linux系统以及mac系统请点击运行XMU-thesis-run.sh脚本
+下载XMU-egthesis-template.rar
 
 
-脚本会自动运行如图所示（第一次运行可能需要较长时间，请耐心等待）。
+*windows系统点击运行XMU-thesis-run.bat脚本
+
+*linux系统以及mac系统请点击运行XMU-thesis-run.sh脚本
+
+
+# 运行命令
 
 
 本模板使用~\XeTeX~ 引擎提供的~\XeLaTeX~的命令处理
@@ -24,11 +26,9 @@ xelatex -no-pdf -interaction=nonstopmode %.tex
 xelatex -interaction=nonstopmode %.tex
 
 
-使用中，如有问题，请入群
 
-QQ：1009155612
 
-更新添加伪代码：
+# 更新添加伪代码：
 在XMU-thesis-grd.cls文件中添加：
 
 %% algorithm package
@@ -44,7 +44,7 @@ QQ：1009155612
 
 例子https://blog.csdn.net/miao0967020148/article/details/110677763
 
-添加Wordcount.bat：统计文字个数
+# 添加Wordcount.bat：统计文字个数
 cmd->命令提示符
 
 切换到文本所在的目录下
@@ -59,3 +59,7 @@ cd E:\Thesis\XMU-thesis-template
 
 .\Wordcount.bat wordcount       # 论文字数统计
 
+
+## 使用中，如有问题，请入群
+
+  - QQ：1009155612

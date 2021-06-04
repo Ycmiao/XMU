@@ -1,17 +1,22 @@
 # XMU  中英文版本
 
-## 英文版本：
+### 英文版本：
 
-下载XMU-egthesis-template.rar
+XMU-egthesis-template.rar
 
+### 中文版本：
+XMU-thesis-template.rar
 
-- windows系统点击运行XMU-thesis-run.bat脚本
+# 运行脚本
 
-- linux系统以及mac系统请点击运行XMU-thesis-run.sh脚本
+- 系统环境用texlive2018以上版本，配置好环境后，可执行
+-- windows系统点击运行XMU-thesis-run.bat脚本
+
+-- linux系统以及mac系统请点击运行XMU-thesis-run.sh脚本
+
 
 
 # 运行命令
-
 
 本模板使用~\XeTeX~ 引擎提供的~\XeLaTeX~的命令处理
 

@@ -10,9 +10,9 @@ XMU-thesis-template.rar
 # 运行脚本
 
 - 系统环境用texlive2018以上版本，配置好环境后，可执行
--- windows系统点击运行XMU-thesis-run.bat脚本
+- windows系统点击运行XMU-thesis-run.bat脚本
 
--- linux系统以及mac系统请点击运行XMU-thesis-run.sh脚本
+- linux系统以及mac系统请点击运行XMU-thesis-run.sh脚本
 
 
 

@@ -60,6 +60,7 @@ cd E:\Thesis\XMU-thesis-template
 .\Wordcount.bat wordcount       # 论文字数统计
 
 
-## 使用中，如有问题，请入群
+## 使用中，如有问题，请入群或CSDN中LaTeX模板
 
   - QQ：1009155612
+  - CSDN:https://blog.csdn.net/miao0967020148 

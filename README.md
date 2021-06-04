@@ -2,10 +2,10 @@
 
 ### 英文版本：
 
-XMU-egthesis-template.rar
+XMU-egthesis-template.zip
 
 ### 中文版本：
-XMU-thesis-template.rar
+XMU-thesis-template.zip
 
 # 运行脚本
 
